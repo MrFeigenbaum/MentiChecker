@@ -26,3 +26,8 @@ Elegant floating slide inspector, real-time AI quiz solver, on-slide answer high
    C:\Users\User\Desktop\MentiChecker
 4. If you already loaded the extension, click the **↻ (Reload)** button on the MentiChecker extension card.
 5. Open your Mentimeter presentation tab (https://www.menti.com/...) and refresh the page!
+6. Click on round button in the bottom-right angle
+7. Click on settings button
+8. Enter your API key
+9. Click on save button at the bottom
+10. Relax and Enjoy the fully automated quiz answering!
