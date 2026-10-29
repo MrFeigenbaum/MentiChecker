@@ -7,7 +7,7 @@ Elegant floating slide inspector, real-time AI quiz solver, on-slide answer high
 ## Features
 
 - **Author**: Created by **D4SHW00D**.
-- **Random Answer Timer (0.5s – 1.5s)**: Waits until answer options (A, B, C, D) appear on the slide (e.g. after the 5-second question preview countdown), then triggers a random delay between 0.5s and 1.5s before selecting the answer.
+- **Random Answer Timer (0.5s - 1.5s)**: Waits until answer options (A, B, C, D) appear on the slide (e.g. after the 5-second question preview countdown), then triggers a random delay between 0.5s and 1.5s before selecting the answer.
 - **Optional Auto-Answer Toggle**: Auto-answer on the presentation slide is fully optional. Easily enable or disable it with the dedicated toggle switch in MentiChecker Settings or the popup toolbar button. When turned off, answers are only displayed inside MentiChecker.
 - **Round FAB Button**: Sleek neon button in the bottom-right corner of every Mentimeter page.
 - **Full Support for Polls & Quizzes**: Solves both multiple-choice (Polls) and quiz-choice (Competition Quizzes) with 100% verified accuracy.

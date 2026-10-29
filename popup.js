@@ -12,8 +12,7 @@ const footer = document.getElementById('footer');
 const footerTxt = document.getElementById('footer-txt');
 
 /* -- helpers -- */
-function esc(s)
-{
+function esc(s) {
   return String(s ?? '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -21,24 +20,21 @@ function esc(s)
     .replace(/"/g, '&quot;');
 }
 
-function stripeClass(type)
-{
+function stripeClass(type) {
   if (type === 'quiz-choice') return 'stripe-quiz';
   if (type === 'multiple-choice') return 'stripe-mc';
   if (type === 'heading' || type === 'free-text' || type === 'list') return 'stripe-info';
   return '';
 }
 
-function tagClass(type)
-{
+function tagClass(type) {
   if (type === 'quiz-choice') return 'tag-quiz';
   if (type === 'multiple-choice') return 'tag-mc';
   if (type === 'heading' || type === 'free-text' || type === 'list') return 'tag-info';
   return '';
 }
 
-function tagLabel(type)
-{
+function tagLabel(type) {
   const MAP =
   {
     'quiz-choice': 'QUIZ',
@@ -58,8 +54,7 @@ function tagLabel(type)
 /* -- states -- */
 function showLoading() { main.innerHTML = '<div class="state"><div class="loader"></div><p>Scanning page\u2026</p></div>'; }
 
-function showError(msg)
-{
+function showError(msg) {
   main.innerHTML = '<div class="state"><div class="state-symbol">!</div><h2>Nothing found</h2><p>' + msg + '</p><button class="btn-scan" id="btn-retry">Try again</button></div>';
   document.getElementById('btn-retry')?.addEventListener('click', doScan);
 }
@@ -67,69 +62,63 @@ function showError(msg)
 function showEmpty() { main.innerHTML = '<div class="state"><div class="state-symbol">\u2014</div><h2>No slides here</h2><p>Try a different filter.</p></div>'; }
 
 /* -- render -- */
-function render(slides)
-{
-  if (!slides.length)
-  {
+function render(slides) {
+  if (!slides.length) {
     showEmpty();
     return;
   }
 
   const frag = document.createDocumentFragment();
   slides.forEach
-  (
-    (s, i) =>
-    {
-      const div = document.createElement('div');
-      div.className = 'card' + (i < 2 ? ' open' : '');
+    (
+      (s, i) => {
+        const div = document.createElement('div');
+        div.className = 'card' + (i < 2 ? ' open' : '');
 
-      /* body content */
-      let body = '';
-      if (s.isInfo) body = '<div class="info-text">' + esc(s.content) + '</div>';
-      else
-      {
-        let meta = '';
-        if (s.countdown) meta += '<span class="meta-pill timer">' + s.countdown + 's</span>';
-        if (s.scoring) meta += '<span class="meta-pill score">' + s.scoring.replace(/_/g, ' ') + '</span>';
-        if (meta) body += '<div class="meta-row">' + meta + '</div>';
+        /* body content */
+        let body = '';
+        if (s.isInfo) body = '<div class="info-text">' + esc(s.content) + '</div>';
+        else {
+          let meta = '';
+          if (s.countdown) meta += '<span class="meta-pill timer">' + s.countdown + 's</span>';
+          if (s.scoring) meta += '<span class="meta-pill score">' + s.scoring.replace(/_/g, ' ') + '</span>';
+          if (meta) body += '<div class="meta-row">' + meta + '</div>';
 
-        s.choices.forEach
-        (
-          (c, idx) =>
-          {
-            const letter = String.fromCharCode(65 + idx);
-            body += '<div class="choice"><span class="choice-num">' + letter + '</span><span class="choice-text">' + esc(c) + '</span></div>';
-          }
-        );
+          s.choices.forEach
+            (
+              (c, idx) => {
+                const letter = String.fromCharCode(65 + idx);
+                body += '<div class="choice"><span class="choice-num">' + letter + '</span><span class="choice-text">' + esc(c) + '</span></div>';
+              }
+            );
+        }
+
+        const stripe = stripeClass(s.slideType);
+        const tag = tagClass(s.slideType);
+        const label = tagLabel(s.slideType);
+        const q = esc(s.question || s.title || '');
+
+        div.innerHTML =
+          '<div class="card-top">' +
+          '<div class="card-stripe ' + stripe + '"></div>' +
+          '<div class="card-middle">' +
+          '<div class="card-tag ' + tag + '">' + label + '</div>' +
+          '<div class="card-q">' + q + '</div>' +
+          '</div>' +
+          '<i class="card-chevron">&#9660;</i>' +
+          '</div>' +
+          '<div class="card-body">' + body + '</div>';
+
+        div.querySelector('.card-top').addEventListener('click', () => div.classList.toggle('open'));
+        frag.appendChild(div);
       }
-
-      const stripe = stripeClass(s.slideType);
-      const tag = tagClass(s.slideType);
-      const label = tagLabel(s.slideType);
-      const q = esc(s.question || s.title || '');
-
-      div.innerHTML =
-        '<div class="card-top">' +
-        '<div class="card-stripe ' + stripe + '"></div>' +
-        '<div class="card-middle">' +
-        '<div class="card-tag ' + tag + '">' + label + '</div>' +
-        '<div class="card-q">' + q + '</div>' +
-        '</div>' +
-        '<i class="card-chevron">&#9660;</i>' +
-        '</div>' +
-        '<div class="card-body">' + body + '</div>';
-
-      div.querySelector('.card-top').addEventListener('click', () => div.classList.toggle('open'));
-      frag.appendChild(div);
-    }
-  );
+    );
 
   main.innerHTML = '';
   main.appendChild(frag);
 }
 
-function applyFilter(f)
-{
+function applyFilter(f) {
   currentFilter = f;
   const out = f === 'all' ? allSlides :
     f === 'quiz' ? allSlides.filter(s => s.slideType === 'quiz-choice') :
@@ -140,20 +129,16 @@ function applyFilter(f)
 }
 
 /* -- page extraction (runs in page context) -- */
-function extractFromPage()
-{
-  function getSlideDeck()
-  {
+function extractFromPage() {
+  function getSlideDeck() {
     const scripts = Array.from(document.querySelectorAll('script'));
-    for (const sc of scripts)
-    {
+    for (const sc of scripts) {
       const txt = sc.textContent || '';
       if (!txt.includes('slideDeck')) continue;
       /* collect self.__next_f.push([1,"..."]) chunks */
       const re = /self\.__next_f\.push\(\[1,"([\s\S]*?)"\]\)/g;
       let m, combined = '';
-      while ((m = re.exec(txt)) !== null)
-      {
+      while ((m = re.exec(txt)) !== null) {
         try { combined += JSON.parse('"' + m[1] + '"'); }
         catch (e) { combined += m[1]; }
       }
@@ -161,29 +146,23 @@ function extractFromPage()
       if (start === -1) continue;
       /* balanced brace walk */
       let d = 0, str = false, esc = false, end = -1;
-      for (let i = start; i < combined.length; i++)
-      {
+      for (let i = start; i < combined.length; i++) {
         const c = combined[i];
-        if (esc)
-        {
+        if (esc) {
           esc = false;
           continue;
         }
-        if (c === '\\')
-        {
+        if (c === '\\') {
           esc = true;
           continue;
         }
-        if (c === '"')
-        {
+        if (c === '"') {
           str = !str;
           continue;
         }
-        if (!str)
-        {
+        if (!str) {
           if (c === '{') d++;
-          else if (c === '}' && --d === 0)
-          {
+          else if (c === '}' && --d === 0) {
             end = i + 1;
             break;
           }
@@ -191,7 +170,7 @@ function extractFromPage()
       }
       if (end === -1) continue;
       try { return JSON.parse(combined.slice(start, end)); }
-      catch (e) {}
+      catch (e) { }
     }
     return null;
   }
@@ -199,8 +178,7 @@ function extractFromPage()
   const raw = getSlideDeck();
   if (!raw) return [];
 
-  function extractText(n)
-  {
+  function extractText(n) {
     if (!n) return [];
     if (typeof n === 'string') return [n];
     if (Array.isArray(n)) return n.flatMap(extractText);
@@ -211,31 +189,28 @@ function extractFromPage()
   const result = [];
   const SKIP = ['Open-ended choice', 'Word cloud choice'];
 
-  for (const slide of (raw.slideDeck?.slides ?? []))
-  {
+  for (const slide of (raw.slideDeck?.slides ?? [])) {
     const type = slide?.staticContent?.type ?? 'unknown';
     const title = slide?.title ?? '';
     const items = slide?.interactiveContents ?? [];
 
-    for (const item of items)
-    {
+    for (const item of items) {
       const choices = (item?.choices ?? []).map(c => c.title ?? '').filter(Boolean);
       if (!choices.length) continue;
       if (choices.length === 1 && SKIP.some(s => choices[0].includes(s.split(' ')[0]))) continue;
       result.push
-      (
-        {
-          slideType: type,
-          question: item.title ?? title,
-          choices,
-          countdown: item.countdown ?? null,
-          scoring: item.scoring ?? null,
-        }
-      );
+        (
+          {
+            slideType: type,
+            question: item.title ?? title,
+            choices,
+            countdown: item.countdown ?? null,
+            scoring: item.scoring ?? null,
+          }
+        );
     }
 
-    if (!items.length && ['heading', 'free-text', 'list'].includes(type))
-    {
+    if (!items.length && ['heading', 'free-text', 'list'].includes(type)) {
       const sc = slide.staticContent ?? {};
       const parts = [];
       if (sc.heading) parts.push(sc.heading);
@@ -249,35 +224,29 @@ function extractFromPage()
 }
 
 /* -- scan -- */
-function doScan()
-{
+function doScan() {
   showLoading();
   filters.style.display = 'none';
   footer.style.display = 'none';
   stat.style.display = 'none';
 
   chrome.tabs.query
-  (
-    { active: true, currentWindow: true }, tabs =>
-    {
+    (
+      { active: true, currentWindow: true }, tabs => {
       const tab = tabs[0];
-      if (!tab?.url?.includes('menti.com'))
-      {
+      if (!tab?.url?.includes('menti.com')) {
         showError('Navigate to a <strong>menti.com</strong> page first.');
         return;
       }
       chrome.scripting.executeScript
-      (
-        { target: { tabId: tab.id }, func: extractFromPage }, res =>
-        {
-          if (chrome.runtime.lastError)
-          {
+        (
+          { target: { tabId: tab.id }, func: extractFromPage }, res => {
+          if (chrome.runtime.lastError) {
             showError('Script error: ' + chrome.runtime.lastError.message);
             return;
           }
           const slides = res?.[0]?.result ?? [];
-          if (!slides.length)
-          {
+          if (!slides.length) {
             showError('No slide data found.<br>Make sure the page has fully loaded.');
             return;
           }
@@ -292,82 +261,115 @@ function doScan()
 
           /* wire filter buttons once */
           document.querySelectorAll('.f-btn').forEach
-          (
-            btn =>
-            {
-              btn.addEventListener
-              (
-                'click', () =>
-                {
-                  document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
-                  btn.classList.add('active');
-                  applyFilter(btn.dataset.filter);
-                }
-              );
-            }
-          );
+            (
+              btn => {
+                btn.addEventListener
+                  (
+                    'click', () => {
+                    document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyFilter(btn.dataset.filter);
+                  }
+                  );
+              }
+            );
 
           /* reset filter state */
           document.querySelector('.f-btn[data-filter="all"]').classList.add('active');
           currentFilter = 'all';
           applyFilter('all');
         }
-      );
+        );
     }
-  );
+    );
 }
+
+
+/* -- quiz player name -- */
+const inputPlayerName = document.getElementById('popup-player-name');
+const btnSaveName = document.getElementById('btn-save-name');
+
+if (typeof chrome !== 'undefined' && chrome.storage?.local) {
+  chrome.storage.local.get(['mc_player_name'], (data) => {
+    if (data?.mc_player_name && inputPlayerName) {
+      inputPlayerName.value = data.mc_player_name;
+    }
+  });
+}
+
+function savePopupPlayerName() {
+  if (!inputPlayerName) return;
+  const name = inputPlayerName.value.trim();
+  if (typeof chrome !== 'undefined' && chrome.storage?.local) {
+    chrome.storage.local.set({ mc_player_name: name });
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs[0]?.id) {
+        chrome.tabs.sendMessage(tabs[0].id, { type: 'SET_PLAYER_NAME', value: name }).catch(() => {});
+      }
+    });
+  }
+  if (btnSaveName) {
+    btnSaveName.textContent = 'SAVED!';
+    btnSaveName.style.color = 'var(--mint)';
+    btnSaveName.style.borderColor = 'rgba(61, 255, 160, 0.4)';
+    setTimeout(() => {
+      if (btnSaveName) {
+        btnSaveName.textContent = 'SET';
+        btnSaveName.style.color = '#D8B4FE';
+        btnSaveName.style.borderColor = 'rgba(168, 85, 247, 0.35)';
+      }
+    }, 1500);
+  }
+}
+
+btnSaveName?.addEventListener('click', savePopupPlayerName);
+inputPlayerName?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') savePopupPlayerName();
+});
 
 /* -- auto-answer toggle -- */
 const btnAutoToggle = document.getElementById('btn-auto-toggle');
 
-function updatePopupAutoUI(enabled)
-{
+function updatePopupAutoUI(enabled) {
   if (!btnAutoToggle) return;
-  if (enabled)
-  {
+  if (enabled) {
     btnAutoToggle.className = 'auto-btn on';
     btnAutoToggle.textContent = 'AUTO ON';
-    btnAutoToggle.title = 'Auto-answer on presentation slide is ENABLED (0.5s–1.5s delay). Click to disable';
+    btnAutoToggle.title = 'Auto-answer on presentation slide is ENABLED (0.5s-1.5s delay). Click to disable';
   }
-  else
-  {
+  else {
     btnAutoToggle.className = 'auto-btn off';
     btnAutoToggle.textContent = 'AUTO OFF';
     btnAutoToggle.title = 'Auto-answer on presentation slide is DISABLED. Click to enable';
   }
 }
 
-if (typeof chrome !== 'undefined' && chrome.storage?.local)
-{
+if (typeof chrome !== 'undefined' && chrome.storage?.local) {
   chrome.storage.local.get
-  (
-    ['mc_autosel'], (data) =>
-    {
+    (
+      ['mc_autosel'], (data) => {
       const isAuto = data.mc_autosel !== false;
       updatePopupAutoUI(isAuto);
     }
-  );
+    );
 }
 
 btnAutoToggle?.addEventListener
-(
-  'click', () =>
-  {
-    if (typeof chrome !== 'undefined' && chrome.storage?.local)
-    {
+  (
+    'click', () => {
+    if (typeof chrome !== 'undefined' && chrome.storage?.local) {
       chrome.storage.local.get
-      (
-        ['mc_autosel'], (data) =>
-        {
+        (
+          ['mc_autosel'], (data) => {
           const next = data.mc_autosel === false;
           chrome.storage.local.set({ mc_autosel: next });
           updatePopupAutoUI(next);
-          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => { if (tabs[0]?.id) chrome.tabs.sendMessage(tabs[0].id, { type: 'SET_AUTO_SEL', value: next }).catch(() => {}); });
+          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => { if (tabs[0]?.id) chrome.tabs.sendMessage(tabs[0].id, { type: 'SET_AUTO_SEL', value: next }).catch(() => { }); });
         }
-      );
+        );
     }
   }
-);
+  );
 
 /* -- init -- */
 document.getElementById('btn-scan')?.addEventListener('click', doScan);

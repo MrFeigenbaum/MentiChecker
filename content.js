@@ -1,159 +1,153 @@
 const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\n\n  :host {\n    all: initial !important;\n    position: fixed !important;\n    bottom: 24px !important;\n    right: 24px !important;\n    width: 0 !important;\n    height: 0 !important;\n    overflow: visible !important;\n    z-index: 2147483647 !important;\n    pointer-events: none !important;\n    display: block !important;\n    margin: 0 !important;\n    padding: 0 !important;\n    border: none !important;\n    background: transparent !important;\n\n    --bg:      #0D0D1A;\n    --surf:    #14142A;\n    --card:    #1A1A30;\n    --card2:   #20203C;\n    --border:  rgba(255,255,255,0.09);\n    --border2: rgba(255,255,255,0.15);\n    --white:   #EEEEFF;\n    --sub:     #8888B5;\n    --dim:     #424268;\n\n    --cyan:   #00F0FF;\n    --mint:   #00FFB3;\n    --amber:  #FFB347;\n    --red:    #FF3366;\n    --purple: #A855F7;\n\n    --gc: rgba(0,240,255,0.3);\n    --gm: rgba(0,255,179,0.3);\n    --ga: rgba(255,179,71,0.3);\n    --gr: rgba(255,51,102,0.3);\n    --gp: rgba(168,85,247,0.3);\n\n    --font: \'Inter\', system-ui, -apple-system, sans-serif;\n    --mono: \'DM Mono\', monospace;\n\n    font-family: var(--font);\n    color: var(--white);\n  }\n\n  /* ======== FAB ======== */\n  #fab {\n    position: absolute;\n    bottom: 0;\n    right: 0;\n    width: 54px;\n    height: 54px;\n    border-radius: 50%;\n    cursor: pointer;\n    user-select: none;\n    outline: none;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    pointer-events: auto;\n    height: 54px;\n    border-radius: 50%;\n    cursor: pointer;\n    user-select: none;\n    outline: none;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);\n\n    background: linear-gradient(145deg, #1E1E42 0%, #0D0D1A 100%);\n    box-shadow:\n      0 0 0 1.5px rgba(0,240,255,0.25),\n      0 1px 0 rgba(255,255,255,0.15) inset,\n      0 8px 32px rgba(0,0,0,0.7);\n  }\n  #fab:hover {\n    transform: translateY(-3px) scale(1.05);\n    box-shadow:\n      0 0 0 2px var(--cyan),\n      0 0 22px var(--gc),\n      0 1px 0 rgba(255,255,255,0.2) inset,\n      0 12px 40px rgba(0,0,0,0.8);\n  }\n  #fab:active { transform: scale(0.96); }\n  #fab.open {\n    box-shadow:\n      0 0 0 2px var(--cyan),\n      0 0 26px var(--gc),\n      0 1px 0 rgba(255,255,255,0.2) inset,\n      0 8px 32px rgba(0,0,0,0.7);\n  }\n\n  #fab-dot {\n    position: absolute;\n    top: 9px; right: 9px;\n    width: 10px; height: 10px;\n    border-radius: 50%;\n    background: var(--mint);\n    border: 2px solid #0D0D1A;\n    box-shadow: 0 0 10px var(--gm);\n    display: none;\n  }\n  #fab-dot.on {\n    display: block;\n    animation: pulseDot 2s ease-in-out infinite;\n  }\n  @keyframes pulseDot {\n    0%, 100% { box-shadow: 0 0 6px var(--gm); transform: scale(1); }\n    50%      { box-shadow: 0 0 16px var(--gm), 0 0 28px var(--gm); transform: scale(1.15); }\n  }\n\n  /* ======== PANEL ======== */\n  #panel {\n    position: absolute;\n    bottom: 64px;\n    right: 0;\n    width: 420px;\n    height: 560px;\n    max-height: calc(100vh - 90px);\n    min-height: 380px;\n    display: flex;\n    flex-direction: column;\n    overflow: hidden;\n    border-radius: 14px;\n\n    background: var(--bg);\n    border: 1px solid rgba(255,255,255,0.12);\n    box-shadow:\n      0 0 0 1px rgba(0,240,255,0.1),\n      0 1px 0 rgba(255,255,255,0.1) inset,\n      0 28px 80px rgba(0,0,0,0.9);\n\n    opacity: 0;\n    transform: translateY(16px) scale(0.96);\n    pointer-events: none;\n    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);\n  }\n  #panel.open {\n    opacity: 1;\n    transform: translateY(0) scale(1);\n    pointer-events: all;\n  }\n\n  /* Header */\n  #hdr {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    padding: 12px 16px;\n    background: linear-gradient(90deg, rgba(255,51,102,0.08) 0%, transparent 65%);\n    border-bottom: 1px solid var(--border);\n    flex-shrink: 0;\n  }\n  #hdr-logo {\n    width: 30px; height: 30px;\n    border-radius: 8px;\n    display: flex; align-items: center; justify-content: center;\n    background: linear-gradient(135deg, #1C1C3E 0%, #0E0E22 100%);\n    border: 1px solid rgba(0,240,255,0.35);\n    box-shadow: 0 0 14px rgba(0,240,255,0.25), 0 2px 8px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.15) inset;\n    flex-shrink: 0;\n  }\n  #hdr-text { flex: 1; min-width: 0; }\n  #hdr-text h1 {\n    font-size: 13.5px; font-weight: 600;\n    color: var(--white); letter-spacing: -0.2px;\n  }\n  #hdr-text p {\n    font-size: 10px; color: var(--sub);\n    margin-top: 1px;\n    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\n  }\n  #hdr-stat {\n    font-family: var(--mono);\n    font-size: 9.5px; font-weight: 500;\n    color: var(--cyan);\n    background: rgba(0,240,255,0.08);\n    border: 1px solid rgba(0,240,255,0.22);\n    padding: 3px 8px; border-radius: 4px;\n    letter-spacing: 0.4px;\n    display: none;\n    flex-shrink: 0;\n  }\n  #hdr-auto-pill {\n    font-family: var(--mono);\n    font-size: 9px; font-weight: 600;\n    color: var(--mint);\n    background: rgba(0,255,179,0.1);\n    border: 1px solid rgba(0,255,179,0.3);\n    padding: 3px 7px; border-radius: 4px;\n    box-shadow: 0 0 8px rgba(0,255,179,0.2);\n    letter-spacing: 0.5px;\n    display: none;\n    cursor: pointer;\n    flex-shrink: 0;\n  }\n  #hdr-gear, #hdr-close {\n    width: 26px; height: 26px;\n    border-radius: 6px;\n    border: 1px solid var(--border);\n    background: rgba(255,255,255,0.04);\n    cursor: pointer;\n    display: flex; align-items: center; justify-content: center;\n    color: var(--sub);\n    font-size: 13px;\n    transition: all 0.15s;\n    box-shadow: 0 2px 6px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.06) inset;\n    flex-shrink: 0;\n  }\n  #hdr-gear:hover { color: var(--amber); border-color: rgba(255,179,71,0.4); transform: scale(1.05); }\n  #hdr-close:hover { color: var(--white); border-color: rgba(255,255,255,0.3); transform: scale(1.05); }\n\n  /* Key prompt banner */\n  #key-banner {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    margin: 8px 14px 4px;\n    padding: 10px 14px;\n    background: linear-gradient(135deg, rgba(255,179,71,0.14) 0%, rgba(20,20,42,0.92) 100%);\n    border: 1px solid rgba(255,179,71,0.4);\n    border-radius: 9px;\n    box-shadow: 0 0 16px rgba(255,179,71,0.18), 0 2px 8px rgba(0,0,0,0.35);\n    cursor: pointer;\n    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;\n    flex-shrink: 0;\n  }\n  #key-banner:hover {\n    transform: translateY(-1px);\n    border-color: rgba(255,179,71,0.65);\n    box-shadow: 0 0 20px rgba(255,179,71,0.28);\n  }\n  #key-banner-icon { font-size: 18px; color: var(--amber); flex-shrink: 0; }\n  #key-banner-text { flex: 1; min-width: 0; }\n  #key-banner-title {\n    font-size: 12px; font-weight: 600; color: var(--amber); margin-bottom: 2px;\n  }\n  #key-banner-sub {\n    font-size: 10px; color: var(--sub); line-height: 1.35;\n  }\n  #key-banner-arrow {\n    color: var(--amber); font-size: 14px; font-weight: bold; flex-shrink: 0;\n  }\n\n  /* ======== SETTINGS (COLLISION-FREE WITH DEDICATED SCROLL) ======== */\n  #settings {\n    position: absolute;\n    inset: 0;\n    background: var(--bg);\n    border-radius: 14px;\n    display: flex;\n    flex-direction: column;\n    z-index: 25;\n    transform: translateX(100%);\n    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);\n    overflow: hidden;\n  }\n  #settings.open { transform: translateX(0); }\n\n  #settings-hdr {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    padding: 12px 18px;\n    border-bottom: 1px solid var(--border);\n    background: rgba(0,0,0,0.3);\n    flex-shrink: 0;\n  }\n  .settings-title-row { display: flex; align-items: center; gap: 8px; }\n  .settings-title-row h2 { font-size: 14px; font-weight: 600; color: var(--white); }\n  .settings-icon-tag { font-size: 15px; }\n  .settings-close {\n    width: 24px; height: 24px;\n    border-radius: 5px;\n    border: 1px solid var(--border);\n    background: rgba(255,255,255,0.03);\n    cursor: pointer;\n    display: flex; align-items: center; justify-content: center;\n    color: var(--sub);\n    font-size: 14px;\n    transition: all 0.15s;\n  }\n  .settings-close:hover { color: var(--white); border-color: var(--border2); }\n\n  #settings-body {\n    flex: 1;\n    min-height: 0;\n    overflow-y: auto;\n    overflow-x: hidden;\n    padding: 14px 18px;\n    display: flex;\n    flex-direction: column;\n    gap: 14px;\n  }\n  #settings-body::-webkit-scrollbar { width: 6px; }\n  #settings-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.25); border-radius: 3px; }\n  #settings-body::-webkit-scrollbar-thumb {\n    background: var(--cyan);\n    border-radius: 3px;\n    box-shadow: 0 0 8px var(--gc);\n  }\n  #settings-body::-webkit-scrollbar-thumb:hover { background: #4DF6FF; }\n\n  .scard {\n    border-radius: 9px;\n    background: linear-gradient(175deg, #181830 0%, #111122 100%);\n    border: 1px solid var(--border);\n    padding: 13px 15px;\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    flex-shrink: 0;\n    box-shadow: 0 2px 10px rgba(0,0,0,0.3);\n  }\n  .scard-hd { display: flex; align-items: center; gap: 8px; }\n  .scard-icon { font-size: 15px; }\n  .scard-title { font-size: 12.5px; font-weight: 600; color: var(--white); flex: 1; }\n  .scard-pill {\n    font-family: var(--mono); font-size: 8px; font-weight: 600;\n    color: var(--mint); background: rgba(0,255,179,0.1);\n    border: 1px solid rgba(0,255,179,0.3);\n    padding: 2px 6px; border-radius: 4px;\n    letter-spacing: 0.4px;\n  }\n  .scard-desc { font-size: 11px; color: var(--sub); line-height: 1.5; }\n\n  .sfield { display: flex; flex-direction: column; gap: 6px; }\n  .sfield label {\n    font-size: 10px; font-weight: 600;\n    color: var(--amber); letter-spacing: 0.6px;\n    text-transform: uppercase;\n  }\n  .sinput-wrap {\n    display: flex; align-items: center;\n    background: var(--surf);\n    border: 1px solid var(--border2);\n    border-radius: 6px;\n    overflow: hidden;\n    transition: border-color 0.15s, box-shadow 0.15s;\n  }\n  .sinput-wrap:focus-within {\n    border-color: var(--cyan);\n    box-shadow: 0 0 0 3px rgba(0,240,255,0.12);\n  }\n  .sinput-wrap input {\n    flex: 1; min-width: 0;\n    font-family: var(--mono); font-size: 11.5px;\n    color: var(--white); background: transparent;\n    border: none; padding: 10px 12px;\n    outline: none;\n  }\n  .sinput-wrap input::placeholder { color: var(--dim); }\n  .s-eye-btn {\n    background: transparent; border: none;\n    color: var(--sub); cursor: pointer;\n    padding: 0 12px; font-size: 13px;\n    display: flex; align-items: center; justify-content: center;\n    transition: color 0.15s;\n  }\n  .s-eye-btn:hover { color: var(--white); }\n\n  .cookie-note {\n    font-size: 10.5px;\n    color: var(--mint);\n    line-height: 1.5;\n    background: rgba(0,255,179,0.07);\n    border: 1px solid rgba(0,255,179,0.25);\n    border-radius: 6px;\n    padding: 8px 11px;\n  }\n  .cookie-note strong { color: var(--white); font-weight: 600; }\n\n  .s-key-link {\n    color: var(--cyan); font-size: 11px; text-decoration: underline;\n    align-self: flex-start;\n  }\n\n  .stoggle-list { display: flex; flex-direction: column; gap: 11px; }\n  .stoggle-row {\n    display: flex; align-items: center; justify-content: space-between; gap: 12px;\n    flex-shrink: 0;\n  }\n  .stoggle-info { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }\n  .stoggle-title { font-size: 12px; font-weight: 500; color: var(--white); }\n  .stoggle-desc  { font-size: 10px; color: var(--sub); line-height: 1.4; }\n  .stoggle {\n    position: relative;\n    width: 38px; height: 22px;\n    border-radius: 11px;\n    background: rgba(255,255,255,0.14);\n    cursor: pointer;\n    transition: background 0.2s, box-shadow 0.2s;\n    flex-shrink: 0;\n  }\n  .stoggle.on {\n    background: var(--mint);\n    box-shadow: 0 0 12px var(--gm);\n  }\n  .stoggle-thumb {\n    position: absolute;\n    top: 3px; left: 3px;\n    width: 16px; height: 16px;\n    border-radius: 50%;\n    background: #FFFFFF;\n    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);\n    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n  }\n  .stoggle.on .stoggle-thumb {\n    transform: translateX(16px);\n    background: #0D0D1A;\n  }\n\n  #settings-foot {\n    display: flex; gap: 8px;\n    padding: 12px 18px;\n    border-top: 1px solid var(--border);\n    background: rgba(0,0,0,0.35);\n    flex-shrink: 0;\n  }\n  .s-save {\n    flex: 1;\n    font-family: var(--font); font-size: 12px; font-weight: 600;\n    color: #060610; background: var(--cyan);\n    border: none; border-radius: 6px; padding: 10px 18px; cursor: pointer;\n    box-shadow: 0 0 16px var(--gc), 0 4px 12px rgba(0,0,0,0.4);\n    transition: opacity 0.15s, transform 0.1s;\n    text-align: center;\n  }\n  .s-save:hover { opacity: 0.9; transform: translateY(-1px); }\n  .s-back {\n    font-family: var(--font); font-size: 12px; font-weight: 500;\n    color: var(--sub);\n    background: rgba(255,255,255,0.04);\n    border: 1px solid var(--border);\n    border-radius: 6px; padding: 10px 16px; cursor: pointer;\n    transition: all 0.15s;\n  }\n  .s-back:hover { color: var(--white); border-color: var(--border2); }\n\n  /* Filters */\n  #filters {\n    display: none;\n    align-items: center;\n    gap: 5px;\n    padding: 8px 16px;\n    background: rgba(0,0,0,0.25);\n    border-bottom: 1px solid var(--border);\n    flex-shrink: 0;\n  }\n  .flbl {\n    font-size: 9px; font-weight: 600; color: var(--dim);\n    letter-spacing: 1px; text-transform: uppercase;\n    margin-right: 4px; flex-shrink: 0;\n  }\n  .fbtn {\n    font-family: var(--font); font-size: 11px; font-weight: 500;\n    padding: 4px 12px; border-radius: 5px;\n    border: 1px solid var(--border);\n    background: rgba(255,255,255,0.03);\n    color: var(--sub); cursor: pointer;\n    transition: all 0.15s;\n    box-shadow: 0 2px 6px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset;\n    flex-shrink: 0;\n  }\n  .fbtn:hover { color: var(--white); border-color: var(--border2); }\n  .fbtn.on[data-f="all"]  {\n    color: var(--white); border-color: rgba(255,255,255,0.2);\n    background: rgba(255,255,255,0.08);\n  }\n  .fbtn.on[data-f="quiz"] {\n    color: var(--amber); border-color: rgba(255,179,71,0.45);\n    background: rgba(255,179,71,0.08);\n    box-shadow: 0 0 10px var(--ga), 0 2px 6px rgba(0,0,0,0.35);\n  }\n  .fbtn.on[data-f="mc"]   {\n    color: var(--mint); border-color: rgba(0,255,179,0.45);\n    background: rgba(0,255,179,0.08);\n    box-shadow: 0 0 10px var(--gm), 0 2px 6px rgba(0,0,0,0.35);\n  }\n  .fbtn.on[data-f="info"] {\n    color: var(--cyan); border-color: rgba(0,240,255,0.45);\n    background: rgba(0,240,255,0.08);\n    box-shadow: 0 0 10px var(--gc), 0 2px 6px rgba(0,0,0,0.35);\n  }\n\n  /* AI Solve bar */\n  #ai-bar {\n    display: none;\n    align-items: center;\n    justify-content: space-between;\n    padding: 8px 16px;\n    background: rgba(168,85,247,0.06);\n    border-bottom: 1px solid rgba(168,85,247,0.18);\n    flex-shrink: 0;\n    gap: 8px;\n  }\n  #ai-status {\n    font-size: 11px; color: var(--purple);\n    font-family: var(--mono);\n    flex: 1;\n    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\n  }\n  #ai-btn {\n    font-family: var(--font); font-size: 11px; font-weight: 600;\n    color: #0A0A1A;\n    background: linear-gradient(135deg, var(--purple) 0%, #7C3AED 100%);\n    border: none; border-radius: 5px; padding: 5px 14px; cursor: pointer;\n    box-shadow: 0 0 12px var(--gp), 0 3px 10px rgba(0,0,0,0.4);\n    transition: opacity 0.15s, transform 0.1s;\n    white-space: nowrap; flex-shrink: 0;\n  }\n  #ai-btn:hover { opacity: 0.9; transform: translateY(-1px); }\n  #ai-btn:disabled { opacity: 0.45; cursor: wait; }\n\n  /* Main Scroll area */\n  #scroll {\n    flex: 1;\n    min-height: 0;\n    overflow-y: auto;\n    overflow-x: hidden;\n    padding: 10px 14px;\n    display: flex;\n    flex-direction: column;\n    gap: 8px;\n  }\n  #scroll::-webkit-scrollbar { width: 6px; }\n  #scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.25); border-radius: 3px; }\n  #scroll::-webkit-scrollbar-thumb {\n    background: var(--cyan);\n    border-radius: 3px;\n    box-shadow: 0 0 8px var(--gc);\n  }\n  #scroll::-webkit-scrollbar-thumb:hover { background: #4DF6FF; }\n\n  .sbox {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    gap: 12px;\n    padding: 44px 24px;\n    text-align: center;\n    flex-shrink: 0;\n  }\n  .sbox-icon {\n    width: 46px; height: 46px; border-radius: 12px;\n    background: linear-gradient(145deg, #1C1C38 0%, #10101E 100%);\n    border: 1px solid var(--border2);\n    box-shadow: 0 4px 16px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.08) inset;\n    display: flex; align-items: center; justify-content: center;\n    font-size: 20px; flex-shrink: 0;\n  }\n  .sbox h3 { font-size: 14px; font-weight: 600; color: var(--white); }\n  .sbox p  { font-size: 11.5px; color: var(--sub); line-height: 1.7; max-width: 270px; }\n  .scan-btn {\n    font-family: var(--font); font-size: 12.5px; font-weight: 600;\n    color: #050510;\n    background: linear-gradient(135deg, var(--cyan) 0%, #00C8D4 100%);\n    border: none; border-radius: 7px; padding: 10px 24px; cursor: pointer;\n    box-shadow: 0 0 18px var(--gc), 0 4px 14px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.25) inset;\n    transition: opacity 0.15s, transform 0.1s;\n    flex-shrink: 0;\n  }\n  .scan-btn:hover { opacity: 0.9; transform: translateY(-2px); }\n\n  .loader {\n    width: 24px; height: 24px;\n    border: 2.5px solid rgba(255,255,255,0.08);\n    border-top-color: var(--cyan);\n    border-radius: 50%;\n    animation: spinLoader 0.65s linear infinite;\n    box-shadow: 0 0 12px var(--gc);\n    flex-shrink: 0;\n  }\n  @keyframes spinLoader { to { transform: rotate(360deg); } }\n\n  /* ======== CARDS ======== */\n  .card {\n    border-radius: 9px;\n    background: linear-gradient(175deg, #1C1C32 0%, #131322 100%);\n    border: 1px solid var(--border);\n    box-shadow: 0 4px 16px rgba(0,0,0,0.45), 0 1px 0 rgba(255,255,255,0.07) inset;\n    overflow: hidden;\n    transition: border-color 0.15s, transform 0.12s, box-shadow 0.15s;\n    position: relative;\n    flex-shrink: 0;\n  }\n  .card:hover {\n    border-color: var(--border2);\n    transform: translateY(-1px);\n    box-shadow: 0 8px 24px rgba(0,0,0,0.55), 0 1px 0 rgba(255,255,255,0.09) inset;\n  }\n  .card.active-on-screen {\n    border-color: rgba(0,255,179,0.55);\n    box-shadow: 0 0 20px rgba(0,255,179,0.22), 0 4px 16px rgba(0,0,0,0.5);\n  }\n\n  .card-hd {\n    display: flex;\n    align-items: flex-start;\n    gap: 10px;\n    padding: 11px 14px;\n    cursor: pointer;\n    user-select: none;\n    flex-shrink: 0;\n  }\n\n  .stripe {\n    width: 3px; flex-shrink: 0; border-radius: 3px;\n    align-self: stretch; min-height: 20px; margin-top: 2px;\n    background: var(--dim);\n  }\n  .stripe.quiz { background: var(--amber); box-shadow: 0 0 8px var(--ga); }\n  .stripe.mc   { background: var(--mint);  box-shadow: 0 0 8px var(--gm); }\n  .stripe.info { background: var(--cyan);  box-shadow: 0 0 8px var(--gc); }\n\n  .card-text { flex: 1; min-width: 0; }\n  .card-tags-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap; }\n  .card-tag {\n    font-family: var(--mono); font-size: 8px; font-weight: 500;\n    letter-spacing: 1.2px; text-transform: uppercase;\n    color: var(--dim);\n  }\n  .card-tag.quiz { color: var(--amber); }\n  .card-tag.mc   { color: var(--mint); }\n  .card-tag.info { color: var(--cyan); }\n\n  /* Pill showing the answer directly on the card header! */\n  .card-answer-pill {\n    font-family: var(--mono); font-size: 8px; font-weight: 700;\n    color: #0D0D1A; background: var(--mint);\n    padding: 2px 7px; border-radius: 4px;\n    letter-spacing: 0.5px;\n    box-shadow: 0 0 10px rgba(0,255,179,0.5);\n    display: none;\n  }\n  .card.has-answer .card-answer-pill { display: inline-block; }\n\n  .active-badge {\n    font-family: var(--mono); font-size: 7.5px; font-weight: 600;\n    color: var(--mint); background: rgba(0,255,179,0.12);\n    border: 1px solid rgba(0,255,179,0.3);\n    padding: 1px 5px; border-radius: 3px;\n    letter-spacing: 0.5px;\n    display: none;\n  }\n  .card.active-on-screen .active-badge { display: inline-block; }\n\n  .card-q {\n    font-size: 12.5px; font-weight: 500;\n    line-height: 1.5; color: var(--white);\n    word-break: break-word;\n  }\n\n  .chevron {\n    font-size: 9px; color: var(--dim); flex-shrink: 0; margin-top: 5px;\n    transition: transform 0.2s ease; font-style: normal;\n  }\n  .card.open .chevron { transform: rotate(180deg); }\n\n  /* Card body */\n  .card-bd {\n    padding: 0 14px 12px;\n    border-top: 1px solid var(--border);\n    padding-top: 9px;\n    display: none;\n    flex-direction: column;\n    gap: 6px;\n  }\n  .card.open .card-bd { display: flex; }\n\n  .meta { display: flex; gap: 5px; margin-bottom: 3px; flex-shrink: 0; }\n  .mpill {\n    font-family: var(--mono); font-size: 9px;\n    padding: 2px 8px; border-radius: 4px;\n    background: rgba(255,255,255,0.04);\n    border: 1px solid var(--border);\n    color: var(--sub);\n    box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.05) inset;\n    flex-shrink: 0;\n  }\n  .mpill.t { color: var(--amber); border-color: rgba(255,179,71,0.25); background: rgba(255,179,71,0.05); }\n  .mpill.s { color: var(--mint);  border-color: rgba(0,255,179,0.25); background: rgba(0,255,179,0.05); }\n\n  /* ======== VIBRANT GREEN HIGHLIGHTING IN MENTICHECKER ======== */\n  .choice {\n    display: flex; align-items: center; gap: 9px;\n    padding: 8px 12px; border-radius: 7px;\n    background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.08) 100%);\n    border: 1px solid var(--border);\n    box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.05) inset;\n    transition: all 0.2s ease;\n    position: relative;\n    flex-shrink: 0;\n    min-height: 38px;\n  }\n  .choice:hover { border-color: var(--border2); }\n\n  /* STUNNING VIBRANT GREEN HIGHLIGHT ON THE CORRECT CHOICE */\n  .choice.ai-correct {\n    border: 2px solid #00FFB3 !important;\n    background: linear-gradient(90deg, rgba(0,255,179,0.24) 0%, rgba(0,255,179,0.08) 100%) !important;\n    box-shadow: 0 0 20px rgba(0,255,179,0.45), inset 0 0 12px rgba(0,255,179,0.18) !important;\n  }\n  .choice.ai-correct .cltr {\n    background: #00FFB3 !important;\n    color: #0D0D1A !important;\n    font-weight: 800 !important;\n    border-radius: 4px !important;\n    box-shadow: 0 0 10px rgba(0,255,179,0.7) !important;\n    padding: 1px 0 !important;\n  }\n  .choice.ai-correct .ctxt {\n    color: #FFFFFF !important;\n    font-weight: 600 !important;\n    text-shadow: 0 0 12px rgba(0,255,179,0.3) !important;\n  }\n\n  /* Gently dim other choices in a solved card so correct one pops */\n  .card.has-answer .choice:not(.ai-correct) {\n    opacity: 0.52 !important;\n  }\n\n  .cltr {\n    font-family: var(--mono); font-size: 10px;\n    color: var(--dim); flex-shrink: 0; width: 17px; text-align: center;\n    transition: all 0.15s;\n  }\n  .ctxt {\n    font-size: 12px; color: rgba(238,238,255,0.88);\n    line-height: 1.45; flex: 1; min-width: 0;\n    word-break: break-word;\n    transition: color 0.15s;\n  }\n\n  .choice-badges {\n    display: flex; align-items: center; gap: 5px;\n    flex-shrink: 0; margin-left: auto;\n  }\n\n  .ai-badge {\n    font-family: var(--mono); font-size: 8.5px; font-weight: 700;\n    color: #0D0D1A; background: var(--mint);\n    letter-spacing: 0.4px;\n    padding: 2px 7px; border-radius: 4px;\n    box-shadow: 0 0 10px rgba(0,255,179,0.5);\n    flex-shrink: 0; white-space: nowrap;\n    display: none;\n  }\n  .choice.ai-correct .ai-badge { display: inline-block; }\n\n  .auto-badge {\n    font-family: var(--mono); font-size: 8px; font-weight: 600;\n    color: var(--cyan); letter-spacing: 0.3px;\n    background: rgba(0,240,255,0.1);\n    border: 1px solid rgba(0,240,255,0.3);\n    padding: 1px 5px; border-radius: 3px;\n    flex-shrink: 0; white-space: nowrap;\n    display: none;\n  }\n  .choice.auto-selected .auto-badge { display: inline-block; }\n\n  .ai-spin {\n    width: 12px; height: 12px;\n    border: 1.5px solid rgba(168,85,247,0.2);\n    border-top-color: var(--purple);\n    border-radius: 50%;\n    animation: spinLoader 0.65s linear infinite;\n    flex-shrink: 0;\n    display: none;\n  }\n  .choice.ai-thinking .ai-spin { display: block; }\n\n  .itext {\n    font-size: 11.5px; color: var(--sub);\n    line-height: 1.75; padding: 3px 0;\n    border-top: none;\n    word-break: break-word;\n  }\n\n  /* Footer */\n  #foot {\n    display: none;\n    align-items: center;\n    justify-content: space-between;\n    padding: 8px 16px;\n    background: rgba(0,0,0,0.35);\n    border-top: 1px solid var(--border);\n    flex-shrink: 0;\n  }\n  #foot-note {\n    font-family: var(--mono); font-size: 9.5px; color: var(--dim);\n    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\n  }\n  .rescan-btn {\n    font-family: var(--font); font-size: 10.5px; font-weight: 500;\n    color: var(--sub);\n    background: rgba(255,255,255,0.03);\n    border: 1px solid var(--border);\n    border-radius: 5px; padding: 4px 12px; cursor: pointer;\n    box-shadow: 0 2px 6px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.05) inset;\n    transition: all 0.15s;\n    flex-shrink: 0;\n  }\n  .rescan-btn:hover { color: var(--cyan); border-color: rgba(0,240,255,0.3); }\n\n  /* Toast notification */\n  #toast {\n    position: absolute;\n    bottom: 54px;\n    left: 12px;\n    right: 12px;\n    background: linear-gradient(135deg, rgba(0,255,179,0.18) 0%, rgba(13,13,26,0.96) 100%);\n    border: 1px solid var(--mint);\n    box-shadow: 0 0 20px var(--gm), 0 6px 20px rgba(0,0,0,0.7);\n    border-radius: 8px;\n    padding: 9px 13px;\n    display: flex;\n    align-items: center;\n    gap: 9px;\n    font-size: 11.5px;\n    color: var(--white);\n    opacity: 0;\n    transform: translateY(8px);\n    pointer-events: none;\n    transition: opacity 0.25s, transform 0.25s;\n    z-index: 100;\n  }\n  #toast.show {\n    opacity: 1;\n    transform: translateY(0);\n    pointer-events: all;\n  }\n  #toast-icon {\n    color: var(--mint);\n    font-size: 13px;\n    font-weight: bold;\n    flex-shrink: 0;\n  }\n  #toast-msg {\n    flex: 1;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n  }\n';
 (
-  function ()
-  {
+  function () {
     'use strict';
     if (document.getElementById('__mc')) return;
 
     /* -- BUILT-IN VERIFIED SOLUTIONS DATABASE (0ms latency, 100% verified) -- */
     const BUILTIN_SOLUTIONS =
-    [
-      // -- POLL QUESTIONS (SLIDES 6–9, 11) --
-      {
-        match: /filter in java servlets|interface.*filter|filter\b/i,
-        answerRegex: /filter\b/i,
-        letter: 'C'
-      },
-      {
-        match: /map.*filter|filter-mapping/i,
-        answerRegex: /filter-mapping/i,
-        letter: 'A'
-      },
-      {
-        match: /listeners in a java web|configure listeners|web\.xml/i,
-        answerRegex: /web\.xml/i,
-        letter: 'B'
-      },
-      {
-        match: /jstl/i,
-        answerRegex: /java standard tag library/i,
-        letter: 'A'
-      },
-      {
-        match: /spring core/i,
-        answerRegex: /yes/i,
-        letter: 'A'
-      },
-      // -- QUIZ QUESTIONS (SLIDES 19–28) --
-      // Slide 19: What is core component of Spring Framework that provides the basic functionality for configuration and dependency injection?
-      {
-        match: /core component of spring framework.*dependency injection|configuration and dependency injection/i,
-        answerRegex: /spring container/i,
-        letter: 'C'
-      },
-      // Slide 20: Which concept in Spring Architecture is primarily responsible for simplifying the development of loosely coupled applications?
-      {
-        match: /concept in spring architecture.*loosely coupled|loosely coupled applications/i,
-        answerRegex: /dependency injection/i,
-        letter: 'B'
-      },
-      // Slide 21: What does the term "IoC" stand for in the Spring IoC Container?
-      {
-        match: /ioc.*stand for/i,
-        answerRegex: /inversion of control/i,
-        letter: 'C'
-      },
-      // Slide 22: Which of the following is NOT a type of IoC container provided by the Spring Framework?
-      {
-        match: /not a type of ioc container/i,
-        answerRegex: /configurationmanager/i,
-        letter: 'D'
-      },
-      // Slide 23: What is the primary role of the Spring IoC container?
-      {
-        match: /primary role of the spring ioc container|role of.*ioc container/i,
-        answerRegex: /instantiate.*configure.*manage.*lifecycle/i,
-        letter: 'B'
-      },
-      // Slide 24: Which configuration approach can be used to define beans for the IoC container in Spring?
-      {
-        match: /configuration approach.*define beans|define beans for the ioc container/i,
-        answerRegex: /all of the above/i,
-        letter: 'D'
-      },
-      // Slide 25: What is Dependency Injection in the context of the Spring Framework?
-      {
-        match: /what is dependency injection in the context of the spring framework|dependency injection in the context/i,
-        answerRegex: /design pattern used to inject dependencies/i,
-        letter: 'B'
-      },
-      // Slide 26: Which of the following is NOT a method of implementing dependency injection in Spring?
-      {
-        match: /not a method of implementing dependency injection/i,
-        answerRegex: /property injection/i,
-        letter: 'D'
-      },
-      // Slide 27: What is the main benefit of using Dependency Injection in Spring?
-      {
-        match: /main benefit of.*dependency injection|benefit of using dependency injection/i,
-        answerRegex: /loose coupling/i,
-        letter: 'A'
-      },
-      // Slide 28: In annotation-based configuration, which annotation marks a class as a Spring-managed bean that can have its dependencies injected?
-      {
-        match: /annotation marks a class as a spring-managed bean/i,
-        answerRegex: /@component/i,
-        letter: 'B'
-      },
-      // -- JAVA THREADS & CONCURRENCY QUESTIONS --
-      {
-        match: /sets? a thread as a daemon|set.*daemon|daemon/i,
-        answerRegex: /\bsetdaemon\s*\(\s*true\s*\)|\bsetdaemon\b/i,
-        letter: 'B'
-      },
-      // Negative release monitor MUST COME FIRST before affirmative!
-      {
-        match: /(?:does not|doesn't|not)\s+release.*(?:monitor|lock)|pauses?.*execution without releasing/i,
-        answerRegex: /\bsleep\s*\(\s*\)/i,
-        letter: 'D'
-      },
-      // Affirmative release monitor:
-      {
-        match: /^(?!.*(?:does not|not|never)).*releases?\s+an?\s+object'?s?\s+monitor/i,
-        answerRegex: /\bwait\s*\(\s*\)/i,
-        letter: 'A'
-      },
-      {
-        match: /what does join\(\) do|join\(\)/i,
-        answerRegex: /waits? for.*thread to die|waits? for.*thread to finish|waits? for/i,
-        letter: 'C'
-      },
-      {
-        match: /starts? thread execution|start.*thread/i,
-        answerRegex: /\bstart\s*\(\s*\)/i,
-        letter: 'A'
-      },
-      {
-        match: /wakes? up a single thread|wakes? up one thread/i,
-        answerRegex: /\bnotify\s*\(\s*\)/i,
-        letter: 'B'
-      },
-      {
-        match: /wakes? up all threads/i,
-        answerRegex: /\bnotifyall\s*\(\s*\)/i,
-        letter: 'C'
-      },
-      {
-        match: /yield.*cpu|gives? up.*cpu/i,
-        answerRegex: /\byield\s*\(\s*\)/i,
-        letter: 'D'
-      }
-    ];
-
-    function getBuiltinAnswer(question, choices)
-    {
-      const qClean = (question || '').toLowerCase();
-      for (const sol of BUILTIN_SOLUTIONS)
-      {
-        if (sol.match.test(qClean))
+      [
+        // -- POLL QUESTIONS (SLIDES 6-9, 11) --
         {
-          for (let i = 0; i < choices.length; i++)
-          {
+          match: /filter in java servlets|interface.*filter|filter\b/i,
+          answerRegex: /filter\b/i,
+          letter: 'C'
+        },
+        {
+          match: /map.*filter|filter-mapping/i,
+          answerRegex: /filter-mapping/i,
+          letter: 'A'
+        },
+        {
+          match: /listeners in a java web|configure listeners|web\.xml/i,
+          answerRegex: /web\.xml/i,
+          letter: 'B'
+        },
+        {
+          match: /jstl/i,
+          answerRegex: /java standard tag library/i,
+          letter: 'A'
+        },
+        {
+          match: /spring core/i,
+          answerRegex: /yes/i,
+          letter: 'A'
+        },
+        // -- QUIZ QUESTIONS (SLIDES 19-28) --
+        // Slide 19: What is core component of Spring Framework that provides the basic functionality for configuration and dependency injection?
+        {
+          match: /core component of spring framework.*dependency injection|configuration and dependency injection/i,
+          answerRegex: /spring container/i,
+          letter: 'C'
+        },
+        // Slide 20: Which concept in Spring Architecture is primarily responsible for simplifying the development of loosely coupled applications?
+        {
+          match: /concept in spring architecture.*loosely coupled|loosely coupled applications/i,
+          answerRegex: /dependency injection/i,
+          letter: 'B'
+        },
+        // Slide 21: What does the term "IoC" stand for in the Spring IoC Container?
+        {
+          match: /ioc.*stand for/i,
+          answerRegex: /inversion of control/i,
+          letter: 'C'
+        },
+        // Slide 22: Which of the following is NOT a type of IoC container provided by the Spring Framework?
+        {
+          match: /not a type of ioc container/i,
+          answerRegex: /configurationmanager/i,
+          letter: 'D'
+        },
+        // Slide 23: What is the primary role of the Spring IoC container?
+        {
+          match: /primary role of the spring ioc container|role of.*ioc container/i,
+          answerRegex: /instantiate.*configure.*manage.*lifecycle/i,
+          letter: 'B'
+        },
+        // Slide 24: Which configuration approach can be used to define beans for the IoC container in Spring?
+        {
+          match: /configuration approach.*define beans|define beans for the ioc container/i,
+          answerRegex: /all of the above/i,
+          letter: 'D'
+        },
+        // Slide 25: What is Dependency Injection in the context of the Spring Framework?
+        {
+          match: /what is dependency injection in the context of the spring framework|dependency injection in the context/i,
+          answerRegex: /design pattern used to inject dependencies/i,
+          letter: 'B'
+        },
+        // Slide 26: Which of the following is NOT a method of implementing dependency injection in Spring?
+        {
+          match: /not a method of implementing dependency injection/i,
+          answerRegex: /property injection/i,
+          letter: 'D'
+        },
+        // Slide 27: What is the main benefit of using Dependency Injection in Spring?
+        {
+          match: /main benefit of.*dependency injection|benefit of using dependency injection/i,
+          answerRegex: /loose coupling/i,
+          letter: 'A'
+        },
+        // Slide 28: In annotation-based configuration, which annotation marks a class as a Spring-managed bean that can have its dependencies injected?
+        {
+          match: /annotation marks a class as a spring-managed bean/i,
+          answerRegex: /@component/i,
+          letter: 'B'
+        },
+        // -- JAVA THREADS & CONCURRENCY QUESTIONS --
+        {
+          match: /sets? a thread as a daemon|set.*daemon|daemon/i,
+          answerRegex: /\bsetdaemon\s*\(\s*true\s*\)|\bsetdaemon\b/i,
+          letter: 'B'
+        },
+        // Negative release monitor MUST COME FIRST before affirmative!
+        {
+          match: /(?:does not|doesn't|not)\s+release.*(?:monitor|lock)|pauses?.*execution without releasing/i,
+          answerRegex: /\bsleep\s*\(\s*\)/i,
+          letter: 'D'
+        },
+        // Affirmative release monitor:
+        {
+          match: /^(?!.*(?:does not|not|never)).*releases?\s+an?\s+object'?s?\s+monitor/i,
+          answerRegex: /\bwait\s*\(\s*\)/i,
+          letter: 'A'
+        },
+        {
+          match: /what does join\(\) do|join\(\)/i,
+          answerRegex: /waits? for.*thread to die|waits? for.*thread to finish|waits? for/i,
+          letter: 'C'
+        },
+        {
+          match: /starts? thread execution|start.*thread/i,
+          answerRegex: /\bstart\s*\(\s*\)/i,
+          letter: 'A'
+        },
+        {
+          match: /wakes? up a single thread|wakes? up one thread/i,
+          answerRegex: /\bnotify\s*\(\s*\)/i,
+          letter: 'B'
+        },
+        {
+          match: /wakes? up all threads/i,
+          answerRegex: /\bnotifyall\s*\(\s*\)/i,
+          letter: 'C'
+        },
+        {
+          match: /yield.*cpu|gives? up.*cpu/i,
+          answerRegex: /\byield\s*\(\s*\)/i,
+          letter: 'D'
+        }
+      ];
+
+    function getBuiltinAnswer(question, choices) {
+      const qClean = (question || '').toLowerCase();
+      for (const sol of BUILTIN_SOLUTIONS) {
+        if (sol.match.test(qClean)) {
+          for (let i = 0; i < choices.length; i++) {
             const cText = (choices[i]?.text || choices[i] || '').toLowerCase();
             if (sol.answerRegex.test(cText)) return String.fromCharCode(65 + i);
           }
-          if (sol.letter)
-          {
+          if (sol.letter) {
             const ci = sol.letter.charCodeAt(0) - 65;
             if (ci >= 0 && ci < choices.length) return sol.letter;
           }
@@ -165,8 +159,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     /* -- API KEY & STORAGE HELPERS -- */
     let cachedApiKey = '';
 
-    function cleanApiKey(raw)
-    {
+    function cleanApiKey(raw) {
       if (!raw) return '';
       return String(raw)
         .trim()
@@ -176,10 +169,8 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
         .trim();
     }
 
-    function setCookie(name, val, days)
-    {
-      try
-      {
+    function setCookie(name, val, days) {
+      try {
         const d = new Date();
         d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
         const expires = 'expires=' + d.toUTCString();
@@ -189,15 +180,12 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       catch (e) { console.warn('[MentiChecker] setCookie error:', e); }
     }
 
-    function getCookie(name)
-    {
-      try
-      {
+    function getCookie(name) {
+      try {
         const cname = name + '=';
         const decoded = decodeURIComponent(document.cookie || '');
         const parts = decoded.split(';');
-        for (let i = 0; i < parts.length; i++)
-        {
+        for (let i = 0; i < parts.length; i++) {
           let c = parts[i].trim();
           if (c.indexOf(cname) === 0) return c.substring(cname.length, c.length);
         }
@@ -205,10 +193,8 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       return '';
     }
 
-    function deleteCookie(name)
-    {
-      try
-      {
+    function deleteCookie(name) {
+      try {
         const isSecure = location.protocol === 'https:' ? ';Secure' : '';
         document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;SameSite=Lax' + isSecure;
       } catch { }
@@ -216,8 +202,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
     let keyLoadPromise = null;
 
-    function getApiKey()
-    {
+    function getApiKey() {
       if (cachedApiKey) return cachedApiKey;
       const fromStorage = localStorage.getItem('mc_gemini_key') || localStorage.getItem('mc_key') || '';
       const fromCookie = getCookie('mc_gemini_key') || getCookie('mc_key') || '';
@@ -226,22 +211,16 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       return cachedApiKey;
     }
 
-    function ensureApiKeyLoaded()
-    {
+    function ensureApiKeyLoaded() {
       if (cachedApiKey) return Promise.resolve(cachedApiKey);
-      if (!keyLoadPromise)
-      {
-        keyLoadPromise = new Promise((resolve) =>
-        {
+      if (!keyLoadPromise) {
+        keyLoadPromise = new Promise((resolve) => {
           const syncKey = getApiKey();
           if (syncKey) return resolve(syncKey);
-          if (typeof chrome !== 'undefined' && chrome.storage?.local)
-          {
-            chrome.storage.local.get(['mc_gemini_key', 'mc_key'], (res) =>
-            {
+          if (typeof chrome !== 'undefined' && chrome.storage?.local) {
+            chrome.storage.local.get(['mc_gemini_key', 'mc_key'], (res) => {
               const raw = res?.mc_gemini_key || res?.mc_key || '';
-              if (raw)
-              {
+              if (raw) {
                 cachedApiKey = cleanApiKey(raw);
                 try { localStorage.setItem('mc_gemini_key', cachedApiKey); } catch { }
               }
@@ -254,23 +233,19 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       return keyLoadPromise;
     }
 
-    function saveApiKey(raw)
-    {
+    function saveApiKey(raw) {
       const key = cleanApiKey(raw);
       cachedApiKey = key;
       keyLoadPromise = null;
-      if (key)
-      {
+      if (key) {
         setCookie('mc_gemini_key', key, 365);
         try { localStorage.setItem('mc_gemini_key', key); } catch { }
         if (typeof chrome !== 'undefined' && chrome.storage?.local) chrome.storage.local.set({ mc_gemini_key: key }).catch(() => { });
       }
-      else
-      {
+      else {
         deleteCookie('mc_gemini_key');
         deleteCookie('mc_key');
-        try
-        {
+        try {
           localStorage.removeItem('mc_gemini_key');
           localStorage.removeItem('mc_key');
         } catch { }
@@ -279,42 +254,57 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     }
 
     // Preload key from chrome.storage.local on startup
-    if (typeof chrome !== 'undefined' && chrome.storage?.local)
-    {
+    if (typeof chrome !== 'undefined' && chrome.storage?.local) {
       chrome.storage.local.get
-      (
-        ['mc_gemini_key', 'mc_key'], (res) =>
-        {
-          const raw = res?.mc_gemini_key || res?.mc_key || '';
-          if (raw)
-          {
-            cachedApiKey = cleanApiKey(raw);
-            try { localStorage.setItem('mc_gemini_key', cachedApiKey); } catch { }
+        (
+          ['mc_gemini_key', 'mc_key'], (res) => {
+            const raw = res?.mc_gemini_key || res?.mc_key || '';
+            if (raw) {
+              cachedApiKey = cleanApiKey(raw);
+              try { localStorage.setItem('mc_gemini_key', cachedApiKey); } catch { }
+            }
           }
+        );
+    }
+
+    /* -- PLAYER NAME CONFIG -- */
+    let cfgPlayerName = localStorage.getItem('mc_player_name') || '';
+    let cfgAutoName = localStorage.getItem('mc_auto_name') !== 'false';
+
+    // Preload player name from chrome.storage.local
+    if (typeof chrome !== 'undefined' && chrome.storage?.local) {
+      chrome.storage.local.get(['mc_player_name', 'mc_auto_name'], (data) => {
+        if (data?.mc_player_name !== undefined) {
+          cfgPlayerName = data.mc_player_name;
+          try { localStorage.setItem('mc_player_name', cfgPlayerName); } catch (e) { }
         }
-      );
+        if (data?.mc_auto_name !== undefined) {
+          cfgAutoName = data.mc_auto_name;
+          try { localStorage.setItem('mc_auto_name', cfgAutoName ? 'true' : 'false'); } catch (e) { }
+        }
+      });
     }
 
     /* -- HOST + SHADOW ROOT -- */
     const host = document.createElement('div');
     host.id = '__mc';
     host.style.cssText =
-    [
-      'all: initial !important',
-      'position: fixed !important',
-      'bottom: 24px !important',
-      'right: 24px !important',
-      'width: 0 !important',
-      'height: 0 !important',
-      'overflow: visible !important',
-      'z-index: 2147483647 !important',
-      'pointer-events: none !important',
-      'margin: 0 !important',
-      'padding: 0 !important',
-      'border: none !important',
-      'background: transparent !important',
-      'display: block !important'
-    ].join('; ');
+      [
+        'all: initial !important',
+        'position: fixed !important',
+        'bottom: 24px !important',
+        'right: 24px !important',
+        'width: 0 !important',
+        'height: 0 !important',
+        'overflow: visible !important',
+        'z-index: 2147483647 !important',
+        'pointer-events: none !important',
+        'margin: 0 !important',
+        'padding: 0 !important',
+        'border: none !important',
+        'background: transparent !important',
+        'display: block !important'
+      ].join('; ');
 
     (document.documentElement || document.body).appendChild(host);
     const sh = host.attachShadow({ mode: 'open' });
@@ -330,8 +320,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     sh.appendChild(styleEl);
 
     /* -- CYBERPUNK SVGs -- */
-    function svgCyberScanner(size)
-    {
+    function svgCyberScanner(size) {
       const d = size || 26;
       const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       s.setAttribute('width', String(d));
@@ -339,24 +328,23 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       s.setAttribute('viewBox', '0 0 32 32');
       s.setAttribute('fill', 'none');
       s.innerHTML =
-      [
-        '<circle cx="16" cy="16" r="14.5" stroke="#00F0FF" stroke-width="1.2" stroke-opacity="0.35" stroke-dasharray="8 6"/>',
-        '<line x1="16" y1="0.5" x2="16" y2="3.5" stroke="#00F0FF" stroke-width="1.4" stroke-linecap="round"/>',
-        '<line x1="16" y1="28.5" x2="16" y2="31.5" stroke="#00FFB3" stroke-width="1.4" stroke-linecap="round"/>',
-        '<line x1="0.5" y1="16" x2="3.5" y2="16" stroke="#00F0FF" stroke-width="1.4" stroke-linecap="round"/>',
-        '<line x1="28.5" y1="16" x2="31.5" y2="16" stroke="#FF3366" stroke-width="1.4" stroke-linecap="round"/>',
-        '<path d="M 5 24 L 5 9 L 10.5 9 L 13.5 13.5 L 13.5 18 L 9.5 18 L 9.5 24 Z" fill="#00F0FF" fill-opacity="0.85"/>',
-        '<path d="M 27 24 L 27 9 L 21.5 9 L 18.5 13.5 L 18.5 18 L 22.5 18 L 22.5 24 Z" fill="#00F0FF" fill-opacity="0.85"/>',
-        '<circle cx="16" cy="6" r="2" fill="#FF3366"/>',
-        '<circle cx="16" cy="6" r="0.8" fill="#FFFFFF"/>',
-        '<path d="M 6.5 15.5 L 14 24 L 26.5 6.5" stroke="#00FFB3" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>',
-        '<path d="M 6.5 15.5 L 14 24 L 26.5 6.5" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>'
-      ].join('');
+        [
+          '<circle cx="16" cy="16" r="14.5" stroke="#00F0FF" stroke-width="1.2" stroke-opacity="0.35" stroke-dasharray="8 6"/>',
+          '<line x1="16" y1="0.5" x2="16" y2="3.5" stroke="#00F0FF" stroke-width="1.4" stroke-linecap="round"/>',
+          '<line x1="16" y1="28.5" x2="16" y2="31.5" stroke="#00FFB3" stroke-width="1.4" stroke-linecap="round"/>',
+          '<line x1="0.5" y1="16" x2="3.5" y2="16" stroke="#00F0FF" stroke-width="1.4" stroke-linecap="round"/>',
+          '<line x1="28.5" y1="16" x2="31.5" y2="16" stroke="#FF3366" stroke-width="1.4" stroke-linecap="round"/>',
+          '<path d="M 5 24 L 5 9 L 10.5 9 L 13.5 13.5 L 13.5 18 L 9.5 18 L 9.5 24 Z" fill="#00F0FF" fill-opacity="0.85"/>',
+          '<path d="M 27 24 L 27 9 L 21.5 9 L 18.5 13.5 L 18.5 18 L 22.5 18 L 22.5 24 Z" fill="#00F0FF" fill-opacity="0.85"/>',
+          '<circle cx="16" cy="6" r="2" fill="#FF3366"/>',
+          '<circle cx="16" cy="6" r="0.8" fill="#FFFFFF"/>',
+          '<path d="M 6.5 15.5 L 14 24 L 26.5 6.5" stroke="#00FFB3" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>',
+          '<path d="M 6.5 15.5 L 14 24 L 26.5 6.5" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>'
+        ].join('');
       return s;
     }
 
-    function svgCyberLogo(size)
-    {
+    function svgCyberLogo(size) {
       const d = size || 18;
       const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       s.setAttribute('width', String(d));
@@ -364,18 +352,17 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       s.setAttribute('viewBox', '0 0 24 24');
       s.setAttribute('fill', 'none');
       s.innerHTML =
-      [
-        '<path d="M 3.5 19 L 3.5 6.5 L 7.5 6.5 L 9.8 10 L 9.8 13.5 L 7 13.5 L 7 19 Z" fill="#00F0FF" fill-opacity="0.9"/>',
-        '<path d="M 20.5 19 L 20.5 6.5 L 16.5 6.5 L 14.2 10 L 14.2 13.5 L 17 13.5 L 17 19 Z" fill="#00F0FF" fill-opacity="0.9"/>',
-        '<circle cx="12" cy="3.5" r="1.5" fill="#FF3366"/>',
-        '<path d="M 4.5 12 L 9.5 18 L 19.5 4.5" stroke="#00FFB3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
-        '<path d="M 4.5 12 L 9.5 18 L 19.5 4.5" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>'
-      ].join('');
+        [
+          '<path d="M 3.5 19 L 3.5 6.5 L 7.5 6.5 L 9.8 10 L 9.8 13.5 L 7 13.5 L 7 19 Z" fill="#00F0FF" fill-opacity="0.9"/>',
+          '<path d="M 20.5 19 L 20.5 6.5 L 16.5 6.5 L 14.2 10 L 14.2 13.5 L 17 13.5 L 17 19 Z" fill="#00F0FF" fill-opacity="0.9"/>',
+          '<circle cx="12" cy="3.5" r="1.5" fill="#FF3366"/>',
+          '<path d="M 4.5 12 L 9.5 18 L 19.5 4.5" stroke="#00FFB3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
+          '<path d="M 4.5 12 L 9.5 18 L 19.5 4.5" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>'
+        ].join('');
       return s;
     }
 
-    function el(tag, cls, styles)
-    {
+    function el(tag, cls, styles) {
       const e = document.createElement(tag);
       if (cls) e.className = cls;
       if (styles) Object.assign(e.style, styles);
@@ -467,21 +454,19 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
     /* Auto-save as user types or pastes */
     sInput.addEventListener
-    (
-      'input', () =>
-      {
-        saveApiKey(sInput.value);
-        updateAiBar();
-      }
-    );
+      (
+        'input', () => {
+          saveApiKey(sInput.value);
+          updateAiBar();
+        }
+      );
     sInput.addEventListener
-    (
-      'change', () =>
-      {
-        saveApiKey(sInput.value);
-        updateAiBar();
-      }
-    );
+      (
+        'change', () => {
+          saveApiKey(sInput.value);
+          updateAiBar();
+        }
+      );
 
     /* Test Connection Button & Status */
     const sTestRow = el('div');
@@ -490,32 +475,30 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     sTestBtn.type = 'button';
     sTestBtn.textContent = '\u26A1 Test Connection';
     sTestBtn.style.cssText =
-    [
-      'font-family:var(--font)',
-      'font-size:11px',
-      'font-weight:600',
-      'color:var(--white)',
-      'background:rgba(255,255,255,0.06)',
-      'border:1px solid var(--border2)',
-      'border-radius:5px',
-      'padding:5px 12px',
-      'cursor:pointer',
-      'transition:all 0.15s',
-      'white-space:nowrap'
-    ].join(';');
+      [
+        'font-family:var(--font)',
+        'font-size:11px',
+        'font-weight:600',
+        'color:var(--white)',
+        'background:rgba(255,255,255,0.06)',
+        'border:1px solid var(--border2)',
+        'border-radius:5px',
+        'padding:5px 12px',
+        'cursor:pointer',
+        'transition:all 0.15s',
+        'white-space:nowrap'
+      ].join(';');
     sTestBtn.addEventListener('mouseenter', () => { sTestBtn.style.borderColor = 'var(--cyan)'; });
     sTestBtn.addEventListener('mouseleave', () => { sTestBtn.style.borderColor = 'var(--border2)'; });
 
     const sTestStatus = el('span');
     sTestStatus.style.cssText = 'font-size:10px;font-family:var(--mono);color:var(--sub);flex:1;line-height:1.35;word-break:break-word;';
 
-    sTestBtn.addEventListener('click', () =>
-    {
+    sTestBtn.addEventListener('click', () => {
       const rawVal = sInput.value.trim();
       saveApiKey(rawVal);
       const key = getApiKey();
-      if (!key)
-      {
+      if (!key) {
         sTestStatus.style.color = 'var(--amber)';
         sTestStatus.textContent = 'Please paste your API key first';
         return;
@@ -524,25 +507,21 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       sTestStatus.style.color = 'var(--cyan)';
       sTestStatus.textContent = 'Testing Gemini API...';
 
-      chrome.runtime.sendMessage({ type: 'TEST_KEY', key }, (res) =>
-      {
+      chrome.runtime.sendMessage({ type: 'TEST_KEY', key }, (res) => {
         sTestBtn.disabled = false;
-        if (chrome.runtime.lastError)
-        {
+        if (chrome.runtime.lastError) {
           sTestStatus.style.color = 'var(--red)';
           const msg = chrome.runtime.lastError.message || '';
           if (msg.includes('invalidated')) sTestStatus.textContent = '\u274C Extension was reloaded: please refresh page (F5)';
           else sTestStatus.textContent = '\u274C Extension error: ' + msg;
           return;
         }
-        if (res?.success)
-        {
+        if (res?.success) {
           sTestStatus.style.color = 'var(--mint)';
           sTestStatus.textContent = `\u2713 Working! (${res.model} connected)`;
           showToast('\u2713 Gemini API connected successfully!');
         }
-        else
-        {
+        else {
           sTestStatus.style.color = 'var(--red)';
           sTestStatus.textContent = `\u274C ${res?.error || 'Invalid API key'}`;
           showToast('\u274C API Key error: ' + (res?.error || 'Check key'));
@@ -568,6 +547,46 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     scardKey.appendChild(sCookieNote);
     scardKey.appendChild(sLinkA);
 
+    /* Quiz Player Name Card */
+    const scardName = el('div', 'scard');
+    const scHdName = el('div', 'scard-hd');
+    const scIconName = el('span', 'scard-icon'); scIconName.textContent = '\uD83D\uDC64';
+    const scTitleName = el('span', 'scard-title'); scTitleName.textContent = 'Quiz Player Name';
+    const scPillName = el('span', 'scard-pill'); scPillName.textContent = 'AUTO-JOIN';
+    scHdName.appendChild(scIconName); scHdName.appendChild(scTitleName); scHdName.appendChild(scPillName);
+
+    const scDescName = el('div', 'scard-desc');
+    scDescName.textContent = 'Automatically types your name into the Mentimeter quiz lobby (so you never appear as Thomas or a random name on the leaderboard) and joins the quiz.';
+
+    const sFieldName = el('div', 'sfield');
+    const sLabelName = el('label'); sLabelName.textContent = 'Put your real name';
+    const sWrapName = el('div', 'sinput-wrap');
+    const sInputName = el('input');
+    sInputName.type = 'text';
+    sInputName.placeholder = 'e.g. Adrian Finch, Viktoriya ...';
+    sInputName.maxLength = 30;
+    sInputName.value = cfgPlayerName;
+    sWrapName.appendChild(sInputName);
+    sFieldName.appendChild(sLabelName);
+    sFieldName.appendChild(sWrapName);
+
+    const sTListName = el('div', 'stoggle-list');
+    const rowNameTog = el('div', 'stoggle-row');
+    const infoNameTog = el('div', 'stoggle-info');
+    const tNameTog = el('div', 'stoggle-title'); tNameTog.textContent = 'Auto-fill name & join lobby';
+    const dNameTog = el('div', 'stoggle-desc'); dNameTog.textContent = 'Automatically enters your name and clicks Join Quiz when lobby appears';
+    infoNameTog.appendChild(tNameTog); infoNameTog.appendChild(dNameTog);
+    const togName = el('div', 'stoggle' + (cfgAutoName ? ' on' : ''));
+    const thumbName = el('div', 'stoggle-thumb');
+    togName.appendChild(thumbName);
+    rowNameTog.appendChild(infoNameTog); rowNameTog.appendChild(togName);
+    sTListName.appendChild(rowNameTog);
+
+    scardName.appendChild(scHdName);
+    scardName.appendChild(scDescName);
+    scardName.appendChild(sFieldName);
+    scardName.appendChild(sTListName);
+
     const scardAuto = el('div', 'scard');
     const scHd2 = el('div', 'scard-hd');
     const scIcon2 = el('span', 'scard-icon'); scIcon2.textContent = '\u26A1';
@@ -588,8 +607,8 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
     const rowSel = el('div', 'stoggle-row');
     const infoSel = el('div', 'stoggle-info');
-    const tSel = el('div', 'stoggle-title'); tSel.textContent = 'Auto-answer on slide (0.5s – 1.5s timer)';
-    const dSel = el('div', 'stoggle-desc'); dSel.textContent = 'Automatically clicks correct choice on presentation slide after options appear (0.5s–1.5s delay). When disabled, answers are only shown inside MentiChecker.';
+    const tSel = el('div', 'stoggle-title'); tSel.textContent = 'Auto-answer on slide (0.5s - 1.5s timer)';
+    const dSel = el('div', 'stoggle-desc'); dSel.textContent = 'Automatically clicks correct choice on presentation slide after options appear (0.5s-1.5s delay). When disabled, answers are only shown inside MentiChecker.';
     infoSel.appendChild(tSel); infoSel.appendChild(dSel);
     const togSel = el('div', 'stoggle on');
     const thumbSel = el('div', 'stoggle-thumb');
@@ -614,33 +633,34 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
     const scardAuthor = el('div', 'scard');
     scardAuthor.style.cssText =
-    [
-      'padding: 14px 16px',
-      'display: flex',
-      'align-items: center',
-      'justify-content: center',
-      'background: linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(20,20,42,0.92) 100%)',
-      'border: 1px solid rgba(0,240,255,0.35)',
-      'border-radius: 9px',
-      'box-shadow: 0 0 16px rgba(0,240,255,0.15), 0 2px 8px rgba(0,0,0,0.35)',
-      'cursor: default',
-      'user-select: text'
-    ].join('; ');
+      [
+        'padding: 14px 16px',
+        'display: flex',
+        'align-items: center',
+        'justify-content: center',
+        'background: linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(20,20,42,0.92) 100%)',
+        'border: 1px solid rgba(0,240,255,0.35)',
+        'border-radius: 9px',
+        'box-shadow: 0 0 16px rgba(0,240,255,0.15), 0 2px 8px rgba(0,0,0,0.35)',
+        'cursor: default',
+        'user-select: text'
+      ].join('; ');
     const nickEl = el('span');
     nickEl.textContent = 'D4SHW00D';
     nickEl.style.cssText =
-    [
-      'font-family: var(--mono)',
-      'font-size: 20px',
-      'font-weight: 800',
-      'letter-spacing: 5px',
-      'color: var(--cyan)',
-      'text-shadow: 0 0 16px rgba(0,240,255,0.7), 0 0 32px rgba(0,240,255,0.35)',
-      'text-align: center'
-    ].join('; ');
+      [
+        'font-family: var(--mono)',
+        'font-size: 20px',
+        'font-weight: 800',
+        'letter-spacing: 5px',
+        'color: var(--cyan)',
+        'text-shadow: 0 0 16px rgba(0,240,255,0.7), 0 0 32px rgba(0,240,255,0.35)',
+        'text-align: center'
+      ].join('; ');
     scardAuthor.appendChild(nickEl);
 
     sBody.appendChild(scardKey);
+    sBody.appendChild(scardName);
     sBody.appendChild(scardAuto);
     sBody.appendChild(scardAuthor);
 
@@ -658,14 +678,13 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     const flbl = el('span', 'flbl'); flbl.textContent = 'Show';
     filters.appendChild(flbl);
     [['all', 'All'], ['quiz', 'Quiz'], ['mc', 'Poll'], ['info', 'Info']].forEach
-    (
-      ([f, label]) =>
-      {
-        const b = el('button', 'fbtn' + (f === 'all' ? ' on' : ''));
-        b.dataset.f = f; b.textContent = label;
-        filters.appendChild(b);
-      }
-    );
+      (
+        ([f, label]) => {
+          const b = el('button', 'fbtn' + (f === 'all' ? ' on' : ''));
+          b.dataset.f = f; b.textContent = label;
+          filters.appendChild(b);
+        }
+      );
 
     /* AI bar */
     const aiBar = el('div'); aiBar.id = 'ai-bar';
@@ -718,21 +737,18 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     let cfgAutoSel = localStorage.getItem('mc_autosel') !== 'false';
     let cfgAutoSub = localStorage.getItem('mc_autosub') !== 'false';
 
-    function updateToggleUI()
-    {
+    function updateToggleUI() {
       togHl.classList.toggle('on', cfgAutoHl);
       togSel.classList.toggle('on', cfgAutoSel);
       togSub.classList.toggle('on', cfgAutoSub);
-      if (cfgAutoSel)
-      {
+      if (cfgAutoSel) {
         hdrAutoPill.textContent = 'AUTO ON';
         hdrAutoPill.style.color = 'var(--mint)';
         hdrAutoPill.style.borderColor = 'rgba(0,255,179,0.3)';
         hdrAutoPill.style.background = 'rgba(0,255,179,0.1)';
-        hdrAutoPill.title = 'Auto-answer on slide is ENABLED (0.5s–1.5s random timer). Click to disable';
+        hdrAutoPill.title = 'Auto-answer on slide is ENABLED (0.5s-1.5s random timer). Click to disable';
       }
-      else
-      {
+      else {
         hdrAutoPill.textContent = 'AUTO OFF';
         hdrAutoPill.style.color = 'var(--sub)';
         hdrAutoPill.style.borderColor = 'var(--border)';
@@ -741,168 +757,210 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       }
     }
 
-    togHl.addEventListener
-    (
-      'click', () =>
-      {
-        cfgAutoHl = !cfgAutoHl;
-        localStorage.setItem('mc_autohl', cfgAutoHl ? 'true' : 'false');
-        if (typeof chrome !== 'undefined' && chrome.storage?.local) chrome.storage.local.set({ mc_autohl: cfgAutoHl });
-        updateToggleUI();
-        showToast(cfgAutoHl ? 'Green highlight enabled' : 'Green highlight disabled');
-        syncPageHighlightAndSelect();
+    /* Player Name & Auto-Join Event Listeners */
+    sInputName.addEventListener('input', () => {
+      cfgPlayerName = sInputName.value.trim();
+      localStorage.setItem('mc_player_name', cfgPlayerName);
+      if (typeof chrome !== 'undefined' && chrome.storage?.local) {
+        chrome.storage.local.set({ mc_player_name: cfgPlayerName });
       }
-    );
+      checkAndFillQuizName();
+    });
 
-    togSel.addEventListener
-    (
-      'click', () =>
-      {
-        cfgAutoSel = !cfgAutoSel;
-        localStorage.setItem('mc_autosel', cfgAutoSel ? 'true' : 'false');
-        if (typeof chrome !== 'undefined' && chrome.storage?.local) chrome.storage.local.set({ mc_autosel: cfgAutoSel });
-        updateToggleUI();
-        if (!cfgAutoSel)
-        {
-          allSlides.forEach(s =>
-          {
-            if (s.onSlideTimer)
-            {
-              clearTimeout(s.onSlideTimer);
-              s.onSlideTimer = null;
-            }
-          });
-          showToast('Auto-answer disabled (shown only in MentiChecker)');
-        }
-        else
-        {
-          showToast('Auto-answer enabled (0.5s – 1.5s delay)');
+    togName.addEventListener('click', () => {
+      cfgAutoName = !cfgAutoName;
+      togName.classList.toggle('on', cfgAutoName);
+      localStorage.setItem('mc_auto_name', cfgAutoName ? 'true' : 'false');
+      if (typeof chrome !== 'undefined' && chrome.storage?.local) {
+        chrome.storage.local.set({ mc_auto_name: cfgAutoName });
+      }
+      showToast(cfgAutoName ? 'Auto-name enabled' : 'Auto-name disabled');
+      if (cfgAutoName) checkAndFillQuizName();
+    });
+
+    togHl.addEventListener
+      (
+        'click', () => {
+          cfgAutoHl = !cfgAutoHl;
+          localStorage.setItem('mc_autohl', cfgAutoHl ? 'true' : 'false');
+          if (typeof chrome !== 'undefined' && chrome.storage?.local) chrome.storage.local.set({ mc_autohl: cfgAutoHl });
+          updateToggleUI();
+          showToast(cfgAutoHl ? 'Green highlight enabled' : 'Green highlight disabled');
           syncPageHighlightAndSelect();
         }
-      }
-    );
+      );
+
+    togSel.addEventListener
+      (
+        'click', () => {
+          cfgAutoSel = !cfgAutoSel;
+          localStorage.setItem('mc_autosel', cfgAutoSel ? 'true' : 'false');
+          if (typeof chrome !== 'undefined' && chrome.storage?.local) chrome.storage.local.set({ mc_autosel: cfgAutoSel });
+          updateToggleUI();
+          if (!cfgAutoSel) {
+            allSlides.forEach(s => {
+              if (s.onSlideTimer) {
+                clearTimeout(s.onSlideTimer);
+                s.onSlideTimer = null;
+              }
+            });
+            showToast('Auto-answer disabled (shown only in MentiChecker)');
+          }
+          else {
+            showToast('Auto-answer enabled (0.5s - 1.5s delay)');
+            syncPageHighlightAndSelect();
+          }
+        }
+      );
 
     togSub.addEventListener
-    (
-      'click', () =>
-      {
-        cfgAutoSub = !cfgAutoSub;
-        localStorage.setItem('mc_autosub', cfgAutoSub ? 'true' : 'false');
-        if (typeof chrome !== 'undefined' && chrome.storage?.local) chrome.storage.local.set({ mc_autosub: cfgAutoSub });
-        updateToggleUI();
-      }
-    );
-
-    hdrAutoPill.addEventListener
-    (
-      'click', (e) =>
-      {
-        e.stopPropagation();
-        togSel.click();
-      }
-    );
-
-    /* Sync settings with extension storage */
-    if (typeof chrome !== 'undefined' && chrome.storage?.local)
-    {
-      chrome.storage.local.get
       (
-        ['mc_autosel', 'mc_autohl', 'mc_autosub'], (data) =>
-        {
-          if (data.mc_autosel !== undefined) cfgAutoSel = data.mc_autosel;
-          if (data.mc_autohl !== undefined) cfgAutoHl = data.mc_autohl;
-          if (data.mc_autosub !== undefined) cfgAutoSub = data.mc_autosub;
+        'click', () => {
+          cfgAutoSub = !cfgAutoSub;
+          localStorage.setItem('mc_autosub', cfgAutoSub ? 'true' : 'false');
+
+          const nameVal = sInputName.value.trim();
+          cfgPlayerName = nameVal;
+          localStorage.setItem('mc_player_name', nameVal);
+          localStorage.setItem('mc_auto_name', cfgAutoName ? 'true' : 'false');
+          if (typeof chrome !== 'undefined' && chrome.storage?.local) {
+            chrome.storage.local.set({ mc_player_name: nameVal, mc_auto_name: cfgAutoName });
+          }
+          checkAndFillQuizName();
+          if (typeof chrome !== 'undefined' && chrome.storage?.local) chrome.storage.local.set({ mc_autosub: cfgAutoSub });
           updateToggleUI();
         }
       );
-      chrome.storage.onChanged.addListener
+
+    hdrAutoPill.addEventListener
       (
-        (changes, area) =>
-        {
-          if (area === 'local' && changes.mc_autosel !== undefined)
-          {
-            cfgAutoSel = changes.mc_autosel.newValue;
-            localStorage.setItem('mc_autosel', cfgAutoSel ? 'true' : 'false');
-            updateToggleUI();
-          }
+        'click', (e) => {
+          e.stopPropagation();
+          togSel.click();
         }
       );
+
+    /* Sync settings with extension storage */
+    if (typeof chrome !== 'undefined' && chrome.storage?.local) {
+      chrome.storage.local.get
+        (
+          ['mc_autosel', 'mc_autohl', 'mc_autosub', 'mc_player_name', 'mc_auto_name'], (data) => {
+            if (data.mc_player_name !== undefined) { cfgPlayerName = data.mc_player_name; sInputName.value = cfgPlayerName; }
+            if (data.mc_auto_name !== undefined) { cfgAutoName = data.mc_auto_name; togName.classList.toggle('on', cfgAutoName); }
+            if (data.mc_autosel !== undefined) cfgAutoSel = data.mc_autosel;
+            if (data.mc_autohl !== undefined) cfgAutoHl = data.mc_autohl;
+            if (data.mc_autosub !== undefined) cfgAutoSub = data.mc_autosub;
+            updateToggleUI();
+          }
+        );
+      chrome.storage.onChanged.addListener
+        (
+          (changes, area) => {
+            if (area === 'local') {
+              if (changes.mc_player_name !== undefined) {
+                cfgPlayerName = changes.mc_player_name.newValue || '';
+                sInputName.value = cfgPlayerName;
+                checkAndFillQuizName();
+              }
+              if (changes.mc_auto_name !== undefined) {
+                cfgAutoName = changes.mc_auto_name.newValue !== false;
+                togName.classList.toggle('on', cfgAutoName);
+              }
+            }
+            if (area === 'local' && changes.mc_autosel !== undefined) {
+              cfgAutoSel = changes.mc_autosel.newValue;
+              localStorage.setItem('mc_autosel', cfgAutoSel ? 'true' : 'false');
+              updateToggleUI();
+            }
+          }
+        );
     }
 
-    if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage)
-    {
+    if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
       chrome.runtime.onMessage.addListener
-      (
-        (request) =>
-        {
-          if (request.type === 'SET_AUTO_SEL')
-          {
-            cfgAutoSel = !!request.value;
-            localStorage.setItem('mc_autosel', cfgAutoSel ? 'true' : 'false');
-            updateToggleUI();
+        (
+          (request) => {
+            if (request.type === 'SET_PLAYER_NAME') {
+              cfgPlayerName = request.value || '';
+              localStorage.setItem('mc_player_name', cfgPlayerName);
+              sInputName.value = cfgPlayerName;
+              checkAndFillQuizName();
+            }
+            if (request.type === 'SET_AUTO_SEL') {
+              cfgAutoSel = !!request.value;
+              localStorage.setItem('mc_autosel', cfgAutoSel ? 'true' : 'false');
+              updateToggleUI();
+            }
           }
-        }
-      );
+        );
     }
 
     updateToggleUI();
 
     /* -- TOAST NOTIFICATIONS -- */
-    function showToast(msg)
-    {
-      toastMsg.textContent = msg;
+    function showToast(msg, customIcon) {
+      let icon = customIcon || '\u2713';
+      let cleanMsg = String(msg || '').trim();
+
+      if (cleanMsg.startsWith('\u2713') || cleanMsg.startsWith('✓')) {
+        icon = '\u2713';
+        cleanMsg = cleanMsg.replace(/^[\u2713✓]\s*/, '');
+      } else if (cleanMsg.startsWith('\u274C') || cleanMsg.startsWith('❌')) {
+        icon = '\u274C';
+        cleanMsg = cleanMsg.replace(/^[\u274C❌]\s*/, '');
+      }
+
+      toastIcon.textContent = icon;
+      toastIcon.style.color = (icon === '\u274C' || icon === '❌') ? 'var(--red)' : 'var(--mint)';
+      toastMsg.textContent = cleanMsg;
       toast.classList.add('show');
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
-    function showPageBanner(msg)
-    {
-      if (!pageToastEl)
-      {
+    function showPageBanner(msg) {
+      if (!pageToastEl) {
         pageToastEl = document.createElement('div');
         pageToastEl.id = '__mc-page-banner';
         Object.assign
-        (
-          pageToastEl.style,
-          {
-            position: 'fixed',
-            top: '20px',
-            left: '50%',
-            transform: 'translateX(-50%) translateY(-24px)',
-            background: '#0D0D1A',
-            color: '#EEEEFF',
-            border: '1.5px solid #00FFB3',
-            borderRadius: '30px',
-            padding: '9px 22px',
-            fontFamily: "'Inter', system-ui, sans-serif",
-            fontSize: '13px',
-            fontWeight: '600',
-            boxShadow: '0 0 24px rgba(0,255,179,0.45), 0 8px 32px rgba(0,0,0,0.8)',
-            zIndex: '2147483646',
-            opacity: '0',
-            transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-            pointerEvents: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '9px'
-          }
-        );
+          (
+            pageToastEl.style,
+            {
+              position: 'fixed',
+              top: '20px',
+              left: '50%',
+              transform: 'translateX(-50%) translateY(-24px)',
+              background: '#0D0D1A',
+              color: '#EEEEFF',
+              border: '1.5px solid #00FFB3',
+              borderRadius: '30px',
+              padding: '9px 22px',
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontSize: '13px',
+              fontWeight: '600',
+              boxShadow: '0 0 24px rgba(0,255,179,0.45), 0 8px 32px rgba(0,0,0,0.8)',
+              zIndex: '2147483646',
+              opacity: '0',
+              transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+              pointerEvents: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '9px'
+            }
+          );
         document.body.appendChild(pageToastEl);
       }
-      pageToastEl.innerHTML = '<span style="color:#00FFB3;font-size:15px;font-weight:bold;">\u2713</span> ' + msg;
+      const cleanMsg = String(msg || '').replace(/^[\u2713✓]\s*/, '');
+      pageToastEl.innerHTML = '<span style="color:#00FFB3;font-size:15px;font-weight:bold;">\u2713</span> ' + cleanMsg;
       requestAnimationFrame
-      (
-        () =>
-        {
-          pageToastEl.style.opacity = '1';
-          pageToastEl.style.transform = 'translateX(-50%) translateY(0)';
-        }
-      );
-      setTimeout(() =>
-      {
-        if (pageToastEl)
-        {
+        (
+          () => {
+            pageToastEl.style.opacity = '1';
+            pageToastEl.style.transform = 'translateX(-50%) translateY(0)';
+          }
+        );
+      setTimeout(() => {
+        if (pageToastEl) {
           pageToastEl.style.opacity = '0';
           pageToastEl.style.transform = 'translateX(-50%) translateY(-24px)';
         }
@@ -920,68 +978,60 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     // Panel stays open and does NOT autoclose on outside clicks! Only closes via [x] or FAB toggle.
 
     keyBanner.addEventListener
-    (
-      'click', () =>
-      {
-        hdrGear.click();
-        setTimeout(() => sInput.focus(), 250);
-      }
-    );
+      (
+        'click', () => {
+          hdrGear.click();
+          setTimeout(() => sInput.focus(), 250);
+        }
+      );
 
     /* -- SETTINGS INTERACTIONS -- */
     hdrGear.addEventListener
-    (
-      'click', () =>
-      {
-        settings.classList.add('open');
-        sInput.value = getApiKey();
-        updateToggleUI();
-      }
-    );
+      (
+        'click', () => {
+          settings.classList.add('open');
+          sInput.value = getApiKey();
+          updateToggleUI();
+        }
+      );
     sCloseX.addEventListener('click', () => settings.classList.remove('open'));
     sBack.addEventListener('click', () => settings.classList.remove('open'));
 
     sSave.addEventListener
-    (
-      'click', () =>
-      {
-        const key = sInput.value.trim();
-        saveApiKey(key);
+      (
+        'click', () => {
+          const key = sInput.value.trim();
+          saveApiKey(key);
 
-        localStorage.setItem('mc_autohl', cfgAutoHl ? 'true' : 'false');
-        localStorage.setItem('mc_autosel', cfgAutoSel ? 'true' : 'false');
-        localStorage.setItem('mc_autosub', cfgAutoSub ? 'true' : 'false');
+          localStorage.setItem('mc_autohl', cfgAutoHl ? 'true' : 'false');
+          localStorage.setItem('mc_autosel', cfgAutoSel ? 'true' : 'false');
+          localStorage.setItem('mc_autosub', cfgAutoSub ? 'true' : 'false');
 
-        settings.classList.remove('open');
-        updateAiBar();
-        updateToggleUI();
-        showToast(key ? 'Saved to cookies \u2014 ready!' : 'Key removed');
+          settings.classList.remove('open');
+          updateAiBar();
+          updateToggleUI();
+          showToast(key ? 'Saved to cookies \u2014 ready!' : 'Key removed');
 
-        /* Trigger solver immediately */
-        setTimeout(() => runSolver(), 200);
-      }
-    );
+          /* Trigger solver immediately */
+          setTimeout(() => runSolver(), 200);
+        }
+      );
 
-    function updateAiBar()
-    {
+    function updateAiBar() {
       const key = getApiKey();
-      if (key)
-      {
+      if (key) {
         keyBanner.style.display = 'none';
-        if (allSlides.length)
-        {
+        if (allSlides.length) {
           aiBar.style.display = 'flex';
           aiStatus.textContent = '\uD83D\uDD12 Key loaded from cookies';
           hdrAutoPill.style.display = 'block';
         }
-        else
-        {
+        else {
           aiBar.style.display = 'none';
           hdrAutoPill.style.display = 'none';
         }
       }
-      else
-      {
+      else {
         keyBanner.style.display = 'flex';
         aiBar.style.display = 'none';
         hdrAutoPill.style.display = 'none';
@@ -989,8 +1039,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     }
 
     /* -- RENDER STATES -- */
-    function showLoading()
-    {
+    function showLoading() {
       scroll.innerHTML = '';
       const box = el('div', 'sbox');
       const loader = el('div', 'loader');
@@ -998,8 +1047,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       box.appendChild(loader); box.appendChild(p);
       scroll.appendChild(box);
     }
-    function showError(msg)
-    {
+    function showError(msg) {
       scroll.innerHTML = '';
       const box = el('div', 'sbox');
       const icon = el('div', 'sbox-icon'); icon.textContent = '!';
@@ -1010,8 +1058,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       box.appendChild(icon); box.appendChild(h); box.appendChild(p); box.appendChild(btn);
       scroll.appendChild(box);
     }
-    function showEmpty()
-    {
+    function showEmpty() {
       scroll.innerHTML = '';
       const box = el('div', 'sbox');
       const icon = el('div', 'sbox-icon'); icon.textContent = '\u2014';
@@ -1028,17 +1075,16 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
           ['heading', 'free-text', 'list'].includes(t) ? 'info' : '';
 
     const LABEL = t =>
-    (
-      {
-        'quiz-choice': 'QUIZ', 'multiple-choice': 'POLL',
-        'heading': 'HEADING', 'free-text': 'TEXT', 'list': 'LIST',
-        'word-cloud': 'WORDS', 'open-ended': 'OPEN',
-        'leaderboard': 'BOARD', 'instructions': 'INTRO', 'paragraph': 'SLIDE'
-      }
-    )[t] ?? (t || 'SLIDE').toUpperCase();
+      (
+        {
+          'quiz-choice': 'QUIZ', 'multiple-choice': 'POLL',
+          'heading': 'HEADING', 'free-text': 'TEXT', 'list': 'LIST',
+          'word-cloud': 'WORDS', 'open-ended': 'OPEN',
+          'leaderboard': 'BOARD', 'instructions': 'INTRO', 'paragraph': 'SLIDE'
+        }
+      )[t] ?? (t || 'SLIDE').toUpperCase();
 
-    function buildCard(s)
-    {
+    function buildCard(s) {
       const permIdx = allSlides.indexOf(s);
       const stripeType = STRIPE(s.slideType);
       const labelText = LABEL(s.slideType);
@@ -1077,25 +1123,20 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       const bd = el('div', 'card-bd');
       bd.dataset.slideIdx = permIdx;
 
-      if (s.isInfo)
-      {
+      if (s.isInfo) {
         const itxt = el('div', 'itext');
         itxt.textContent = s.content;
         bd.appendChild(itxt);
       }
-      else
-      {
-        if (s.countdown || s.scoring)
-        {
+      else {
+        if (s.countdown || s.scoring) {
           const meta = el('div', 'meta');
-          if (s.countdown)
-          {
+          if (s.countdown) {
             const p = el('span', 'mpill t');
             p.textContent = s.countdown + 's timer';
             meta.appendChild(p);
           }
-          if (s.scoring)
-          {
+          if (s.scoring) {
             const p = el('span', 'mpill s');
             p.textContent = s.scoring.replace(/_/g, ' ');
             meta.appendChild(p);
@@ -1104,40 +1145,38 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
         }
 
         s.choices.forEach
-        (
-          (ch, ci) =>
-          {
-            const isThisCorrect = (s.correctIndex === ci);
-            const row = el('div', 'choice' + (isThisCorrect ? ' ai-correct' : ''));
-            row.dataset.ci = ci;
-            const ltr = el('span', 'cltr');
-            ltr.textContent = String.fromCharCode(65 + ci);
-            const ctxt = el('span', 'ctxt');
-            ctxt.textContent = ch.text || ch;
+          (
+            (ch, ci) => {
+              const isThisCorrect = (s.correctIndex === ci);
+              const row = el('div', 'choice' + (isThisCorrect ? ' ai-correct' : ''));
+              row.dataset.ci = ci;
+              const ltr = el('span', 'cltr');
+              ltr.textContent = String.fromCharCode(65 + ci);
+              const ctxt = el('span', 'ctxt');
+              ctxt.textContent = ch.text || ch;
 
-            const badgeWrap = el('div', 'choice-badges');
-            const badge = el('span', 'ai-badge');
-            badge.textContent = '\u2713 CORRECT ANSWER';
-            const autoBadge = el('span', 'auto-badge');
-            autoBadge.textContent = 'AUTO-SELECTED';
-            const spin = el('div', 'ai-spin');
+              const badgeWrap = el('div', 'choice-badges');
+              const badge = el('span', 'ai-badge');
+              badge.textContent = '\u2713 CORRECT ANSWER';
+              const autoBadge = el('span', 'auto-badge');
+              autoBadge.textContent = 'AUTO-SELECTED';
+              const spin = el('div', 'ai-spin');
 
-            badgeWrap.appendChild(autoBadge);
-            badgeWrap.appendChild(badge);
-            badgeWrap.appendChild(spin);
+              badgeWrap.appendChild(autoBadge);
+              badgeWrap.appendChild(badge);
+              badgeWrap.appendChild(spin);
 
-            row.appendChild(ltr);
-            row.appendChild(ctxt);
-            row.appendChild(badgeWrap);
+              row.appendChild(ltr);
+              row.appendChild(ctxt);
+              row.appendChild(badgeWrap);
 
-            if (s.hasAutoSelected && isThisCorrect) row.classList.add('auto-selected');
+              if (s.hasAutoSelected && isThisCorrect) row.classList.add('auto-selected');
 
-            bd.appendChild(row);
-          }
-        );
+              bd.appendChild(row);
+            }
+          );
 
-        if (!hasAnswer)
-        {
+        if (!hasAnswer) {
           const solveRow = el('div');
           solveRow.className = 'card-solve-row';
           solveRow.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-top:7px;padding-top:7px;border-top:1px dashed var(--border);gap:8px;';
@@ -1151,20 +1190,19 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
           sErr.style.cssText = 'font-size:10px;font-family:var(--mono);color:var(--red);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
 
           sBtn.addEventListener
-          (
-            'click', async (e) =>
-            {
-              e.stopPropagation();
-              sBtn.disabled = true;
-              sBtn.textContent = 'Thinking...';
-              sErr.textContent = '';
-              await solveSingleSlide(s);
-              sBtn.disabled = false;
-              sBtn.innerHTML = '⚡ Solve with AI';
-              if (s.correctIndex != null) solveRow.remove();
-              else if (lastSolverError) sErr.textContent = lastSolverError;
-            }
-          );
+            (
+              'click', async (e) => {
+                e.stopPropagation();
+                sBtn.disabled = true;
+                sBtn.textContent = 'Thinking...';
+                sErr.textContent = '';
+                await solveSingleSlide(s);
+                sBtn.disabled = false;
+                sBtn.innerHTML = '⚡ Solve with AI';
+                if (s.correctIndex != null) solveRow.remove();
+                else if (lastSolverError) sErr.textContent = lastSolverError;
+              }
+            );
 
           solveRow.appendChild(sBtn);
           solveRow.appendChild(sErr);
@@ -1173,73 +1211,65 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       }
 
       hd.addEventListener('click', () => card.classList.toggle('open'));
-        card.appendChild(hd); card.appendChild(bd);
-        return card;
-      }
+      card.appendChild(hd); card.appendChild(bd);
+      return card;
+    }
 
-      function render(slides)
-      {
-        if (!slides.length) { showEmpty(); return; }
-        scroll.innerHTML = '';
-        const frag = document.createDocumentFragment();
-        slides.forEach(s => frag.appendChild(buildCard(s)));
-        scroll.appendChild(frag);
-        updateActiveSlideUI();
-      }
+    function render(slides) {
+      if (!slides.length) { showEmpty(); return; }
+      scroll.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      slides.forEach(s => frag.appendChild(buildCard(s)));
+      scroll.appendChild(frag);
+      updateActiveSlideUI();
+    }
 
-      function applyFilter(f)
-      {
-        curFilter = f;
-        const out =
-          f === 'quiz' ? allSlides.filter(s => s.slideType === 'quiz-choice') :
-            f === 'mc' ? allSlides.filter(s => s.slideType === 'multiple-choice') :
-              f === 'info' ? allSlides.filter(s => s.isInfo) :
-                allSlides;
-        render(out);
-        updateAiBar();
-      }
+    function applyFilter(f) {
+      curFilter = f;
+      const out =
+        f === 'quiz' ? allSlides.filter(s => s.slideType === 'quiz-choice') :
+          f === 'mc' ? allSlides.filter(s => s.slideType === 'multiple-choice') :
+            f === 'info' ? allSlides.filter(s => s.isInfo) :
+              allSlides;
+      render(out);
+      updateAiBar();
+    }
 
     filters.querySelectorAll('.fbtn').forEach
-    (
-      btn =>
-      {
-        btn.addEventListener
-        (
-          'click', () =>
-          {
-            filters.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
-            btn.classList.add('on');
-            applyFilter(btn.dataset.f);
-          }
-        );
-      }
-    );
+      (
+        btn => {
+          btn.addEventListener
+            (
+              'click', () => {
+                filters.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
+                btn.classList.add('on');
+                applyFilter(btn.dataset.f);
+              }
+            );
+        }
+      );
 
     /* Update all visual cards in MentiChecker panel when an answer is found */
-    function markCardAsSolved(slideIdx, correctCi)
-    {
+    function markCardAsSolved(slideIdx, correctCi) {
       const card = sh.querySelector(`.card[data-slide-idx="${slideIdx}"]`);
-      if (card)
-      {
+      if (card) {
         card.classList.add('has-answer');
         card.classList.add('open');
 
         const ansPill = card.querySelector('.card-answer-pill');
-        if (ansPill)
-        {
+        if (ansPill) {
           ansPill.textContent = '\u2713 ANSWER: ' + String.fromCharCode(65 + correctCi);
           ansPill.style.display = 'inline-block';
         }
 
         const rows = card.querySelectorAll('.choice');
         rows.forEach
-        (
-          (r, ci) =>
-          {
-            if (ci === correctCi) r.classList.add('ai-correct');
-            else r.classList.remove('ai-correct');
-          }
-        );
+          (
+            (r, ci) => {
+              if (ci === correctCi) r.classList.add('ai-correct');
+              else r.classList.remove('ai-correct');
+            }
+          );
 
         const solveRow = card.querySelector('.card-solve-row');
         if (solveRow) solveRow.remove();
@@ -1247,21 +1277,17 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     }
 
     /* -- DATA EXTRACTION -- */
-    function extractSlideDeck()
-    {
-      for (const sc of document.querySelectorAll('script'))
-      {
+    function extractSlideDeck() {
+      for (const sc of document.querySelectorAll('script')) {
         const txt = sc.textContent || '';
         if (!txt.includes('slideDeck')) continue;
         const re = /self\.__next_f\.push\(\[1,"([\s\S]*?)"\]\)/g;
         let m, combined = '';
-        while ((m = re.exec(txt)) !== null)
-        { try { combined += JSON.parse('"' + m[1] + '"'); } catch { combined += m[1]; } }
+        while ((m = re.exec(txt)) !== null) { try { combined += JSON.parse('"' + m[1] + '"'); } catch { combined += m[1]; } }
         const start = combined.indexOf('{"slideDeck":');
         if (start === -1) continue;
         let depth = 0, inStr = false, esc = false, end = -1;
-        for (let i = start; i < combined.length; i++)
-        {
+        for (let i = start; i < combined.length; i++) {
           const c = combined[i];
           if (esc) { esc = false; continue; }
           if (c === '\\') { esc = true; continue; }
@@ -1274,18 +1300,15 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       return null;
     }
 
-    function parseSlides(raw)
-    {
-      function extractText(n)
-      {
+    function parseSlides(raw) {
+      function extractText(n) {
         if (!n) return [];
         if (typeof n === 'string') return [n];
         if (Array.isArray(n)) return n.flatMap(extractText);
         if (n.type === 'text' && n.text) return [n.text];
         return Object.values(n).flatMap(extractText);
       }
-      function getChoiceText(c)
-      {
+      function getChoiceText(c) {
         if (!c) return '';
         if (typeof c === 'string') return c.trim();
         if (typeof c === 'number') return String(c);
@@ -1294,40 +1317,38 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
       const SKIP = ['Open-ended', 'Word cloud'];
       const result = [];
-      for (const slide of (raw?.slideDeck?.slides ?? []))
-      {
+      for (const slide of (raw?.slideDeck?.slides ?? [])) {
         const type = slide?.staticContent?.type ?? 'unknown';
         const title = slide?.title ?? '';
         const items = (slide?.interactiveContents?.length) ? slide.interactiveContents : [slide];
-        for (const item of items)
-        {
+        for (const item of items) {
           const rawChoices = item?.choices || item?.options || slide?.choices || slide?.options || slide?.staticContent?.choices || [];
           const parsedChoices = rawChoices.map
-          (
-            (c, idx) =>
             (
-              {
-                text: getChoiceText(c),
-                isCorrect: (typeof c === 'object') ? (c?.isCorrect ?? c?.correct ?? c?.is_correct ?? null) : null,
-                id: (typeof c === 'object' && (c?.interactiveContentChoiceId || c?.id)) ? (c.interactiveContentChoiceId || c.id) : String(idx)
-              }
-            )
-          ).filter(c => c.text);
+              (c, idx) =>
+              (
+                {
+                  text: getChoiceText(c),
+                  isCorrect: (typeof c === 'object') ? (c?.isCorrect ?? c?.correct ?? c?.is_correct ?? null) : null,
+                  id: (typeof c === 'object' && (c?.interactiveContentChoiceId || c?.id)) ? (c.interactiveContentChoiceId || c.id) : String(idx)
+                }
+              )
+            ).filter(c => c.text);
 
           if (!parsedChoices.length) continue;
           if (parsedChoices.length === 1 && SKIP.some(s => parsedChoices[0].text.startsWith(s))) continue;
 
           const knownCorrectIdx = parsedChoices.findIndex(c => c.isCorrect === true);
           const qText = String
-          (
-            item.title ||
-            title ||
-            slide?.staticContent?.heading ||
-            slide?.staticContent?.subheading ||
-            item?.question ||
-            item?.label ||
-            ''
-          ).trim();
+            (
+              item.title ||
+              title ||
+              slide?.staticContent?.heading ||
+              slide?.staticContent?.subheading ||
+              item?.question ||
+              item?.label ||
+              ''
+            ).trim();
 
           // Check verified built-in solution immediately
           const builtinLetter = getBuiltinAnswer(qText, parsedChoices);
@@ -1335,24 +1356,23 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
           if (resolvedIdx == null && builtinLetter) resolvedIdx = builtinLetter.charCodeAt(0) - 65;
 
           result.push
-          (
-            {
-              slideType: type,
-              question: qText,
-              choices: parsedChoices,
-              countdown: item.countdown ?? null,
-              scoring: item.scoring ?? null,
-              correctIndex: resolvedIdx,
-              correctText: resolvedIdx != null ? parsedChoices[resolvedIdx]?.text : null,
-              hasAutoSelected: false,
-              slideTimerFired: false,
-              onSlideTimer: null,
-              solvingAI: false
-            }
-          );
+            (
+              {
+                slideType: type,
+                question: qText,
+                choices: parsedChoices,
+                countdown: item.countdown ?? null,
+                scoring: item.scoring ?? null,
+                correctIndex: resolvedIdx,
+                correctText: resolvedIdx != null ? parsedChoices[resolvedIdx]?.text : null,
+                hasAutoSelected: false,
+                slideTimerFired: false,
+                onSlideTimer: null,
+                solvingAI: false
+              }
+            );
         }
-        if (!items.length && ['heading', 'free-text', 'list'].includes(type))
-        {
+        if (!items.length && ['heading', 'free-text', 'list'].includes(type)) {
           const sc = slide.staticContent ?? {}, parts = [];
           if (sc.heading) parts.push(sc.heading);
           if (sc.subheading) parts.push(sc.subheading);
@@ -1368,8 +1388,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     let pageStyleEl = null;
     const PAGE_ATTR = 'data-mc-answer';
 
-    function injectPageStyle()
-    {
+    function injectPageStyle() {
       if (pageStyleEl) return;
       pageStyleEl = document.createElement('style');
       pageStyleEl.id = '__mc-page-style';
@@ -1416,8 +1435,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
     function clearPageHighlights() { document.querySelectorAll('[' + PAGE_ATTR + ']').forEach(e => { e.removeAttribute(PAGE_ATTR); }); }
 
-    function norm(str)
-    {
+    function norm(str) {
       return (str || '')
         .replace(/^[A-Z0-9][).\s:-]+/i, '')
         .toLowerCase()
@@ -1427,8 +1445,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     }
 
     /* -- FILTER OUT NON-CHOICE UI CONTROLS (Open Q&A, Ask Question, Submit, etc) -- */
-    function isNonChoiceElement(el)
-    {
+    function isNonChoiceElement(el) {
       if (!el) return true;
       const btn = el.closest('button, [role="button"], [role="link"], a') || el;
       const raw = ((btn.innerText || btn.textContent || '') + ' ' + (el.innerText || el.textContent || '')).toLowerCase().trim();
@@ -1438,7 +1455,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
       // 1. Q&A and Audience question controls
       if
-      (
+        (
         raw.includes('q&a') || raw.includes('q & a') || raw.includes('qna') ||
         raw.includes('open q') || raw.includes('ask a question') || raw.includes('ask question') ||
         (raw.includes('question') && (raw.includes('open') || raw.includes('ask'))) ||
@@ -1449,7 +1466,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
       // 2. Submit / Vote / Navigation controls
       if
-      (
+        (
         raw === 'submit' || raw === 'vote' || raw === 'submit answer' || raw === 'next' ||
         raw === 'back' || raw === 'close' || raw === 'skip' || raw === 'exit' ||
         testId.includes('submit') || testId.includes('vote') || testId.includes('next-button')
@@ -1457,7 +1474,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
       // 3. Reactions & Leaderboard
       if
-      (
+        (
         raw.includes('reaction') || aria.includes('reaction') || testId.includes('reaction') ||
         raw.includes('leaderboard') || raw.includes('scores') || testId.includes('leaderboard')
       ) return true;
@@ -1473,8 +1490,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     }
 
     /* -- VISIBLE OPTIONS DETECTOR (CONFIRMS OPTIONS ARE VISUALLY RENDERED) -- */
-    function isElementVisuallyVisible(el)
-    {
+    function isElementVisuallyVisible(el) {
       if (!el || !el.isConnected) return false;
 
       // Check DOM display/visibility/opacity
@@ -1493,8 +1509,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       // Check parent containers for hidden or zero-opacity state
       let p = el.parentElement;
       let depth = 0;
-      while (p && depth < 6 && p !== document.body)
-      {
+      while (p && depth < 6 && p !== document.body) {
         const pStyle = window.getComputedStyle(p);
         if (pStyle.display === 'none' || pStyle.visibility === 'hidden') return false;
         if (parseFloat(pStyle.opacity || '1') < 0.15) return false;
@@ -1506,20 +1521,18 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       return true;
     }
 
-    function findPageChoiceElements()
-    {
+    function findPageChoiceElements() {
       const SELECTORS =
-      [
-        'button', '[role="button"]', '[role="option"]', '[role="radio"]', '[role="checkbox"]',
-        'label', '[class*="choice"]', '[class*="option"]', '[class*="answer"]', '[class*="quiz"]',
-        '[class*="Choice"]', '[class*="Option"]', '[class*="Answer"]', '[class*="Quiz"]',
-        '[data-testid*="choice"]', '[data-testid*="option"]', '[data-testid*="button"]',
-        '[data-testid*="answer"]', '[data-testid*="quiz"]'
-      ].join(',');
+        [
+          'button', '[role="button"]', '[role="option"]', '[role="radio"]', '[role="checkbox"]',
+          'label', '[class*="choice"]', '[class*="option"]', '[class*="answer"]', '[class*="quiz"]',
+          '[class*="Choice"]', '[class*="Option"]', '[class*="Answer"]', '[class*="Quiz"]',
+          '[data-testid*="choice"]', '[data-testid*="option"]', '[data-testid*="button"]',
+          '[data-testid*="answer"]', '[data-testid*="quiz"]'
+        ].join(',');
 
       const all = Array.from(document.querySelectorAll(SELECTORS));
-      const filtered = all.filter(el =>
-      {
+      const filtered = all.filter(el => {
         if (host.contains(el)) return false;
 
         // MUST BE VISUALLY DISPLAYED ON SCREEN!
@@ -1535,8 +1548,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       });
 
       // 1. Discard container elements that contain multiple choice candidates
-      const nonContainers = filtered.filter(el =>
-      {
+      const nonContainers = filtered.filter(el => {
         const subCandidates = el.querySelectorAll('button, [role="button"], [role="option"], [role="radio"]');
         return subCandidates.length <= 1;
       });
@@ -1547,8 +1559,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       return deduped;
     }
 
-    function areOptionsVisuallyAppeared(slide)
-    {
+    function areOptionsVisuallyAppeared(slide) {
       if (!slide || !slide.choices || slide.choices.length === 0) return false;
       const pageChoices = findPageChoiceElements();
       if (pageChoices.length < 2) return false;
@@ -1558,10 +1569,8 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
       // Check that the correct choice button is among the visually visible choices
       let correctElFound = false;
-      for (const [el, idx] of matchedMap.entries())
-      {
-        if (idx === slide.correctIndex && isElementVisuallyVisible(el))
-        {
+      for (const [el, idx] of matchedMap.entries()) {
+        if (idx === slide.correctIndex && isElementVisuallyVisible(el)) {
           correctElFound = true;
           break;
         }
@@ -1570,22 +1579,19 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     }
 
     /* -- LIVE QUESTION HEADING DETECTOR (DIRECT DOM INSPECTION) -- */
-    function getPageQuestionHeading()
-    {
+    function getPageQuestionHeading() {
       const selectors =
-      [
-        'h1', 'h2', 'h3',
-        '[data-testid*="question"]', '[data-testid*="slide-title"]', '[data-testid*="title"]',
-        '[class*="Question"]', '[class*="question"]',
-        '[class*="SlideTitle"]', '[class*="slide-title"]'
-      ];
+        [
+          'h1', 'h2', 'h3',
+          '[data-testid*="question"]', '[data-testid*="slide-title"]', '[data-testid*="title"]',
+          '[class*="Question"]', '[class*="question"]',
+          '[class*="SlideTitle"]', '[class*="slide-title"]'
+        ];
       const headings = Array.from(document.querySelectorAll(selectors.join(','))).filter(el => !host.contains(el) && !isNonChoiceElement(el));
 
-      for (const h of headings)
-      {
+      for (const h of headings) {
         const t = (h.innerText || h.textContent || '').trim();
-        if (t.length >= 6 && t.length <= 400)
-        {
+        if (t.length >= 6 && t.length <= 400) {
           const lower = t.toLowerCase();
           if (!lower.includes('mentimeter') && !lower.includes('join at') && !lower.includes('enter the code')) return norm(t);
         }
@@ -1593,8 +1599,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       return '';
     }
 
-    function detectActiveSlide()
-    {
+    function detectActiveSlide() {
       if (!allSlides.length) return null;
       const bodyText = norm(document.body.innerText || '');
       const pageHeading = getPageQuestionHeading();
@@ -1606,14 +1611,12 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       const pageChoices = findPageChoiceElements();
       const pageChoiceTexts = pageChoices.map(el => norm((el.innerText || el.textContent || '') + ' ' + (el.getAttribute('aria-label') || '')));
 
-      for (const s of interactive)
-      {
+      for (const s of interactive) {
         let score = 0;
         const qNorm = norm(s.question);
 
         // 1. Direct slide heading match (highest priority, 1000 points)
-        if (pageHeading)
-        {
+        if (pageHeading) {
           const isPageNegative = /\b(?:not|does not|doesn t|never)\b/i.test(pageHeading);
           const isSlideNegative = /\b(?:not|does not|doesn t|never)\b/i.test(qNorm);
 
@@ -1621,8 +1624,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
           if (isPageNegative !== isSlideNegative) score -= 500;
           else if (pageHeading === qNorm) score += 1000;
           else if (pageHeading.length > 8 && (pageHeading.includes(qNorm) || qNorm.includes(pageHeading))) score += 600;
-          else
-          {
+          else {
             const pWords = pageHeading.split(' ').filter(w => w.length > 3);
             const qWords = qNorm.split(' ').filter(w => w.length > 3);
             const common = pWords.filter(w => qWords.includes(w)).length;
@@ -1632,8 +1634,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
         // 2. Full body text match
         if (qNorm.length > 5 && bodyText.includes(qNorm)) score += 15;
-        else if (qNorm.length > 8)
-        {
+        else if (qNorm.length > 8) {
           const words = qNorm.split(' ').filter(w => w.length > 3);
           const matches = words.filter(w => bodyText.includes(w)).length;
           if (words.length > 0 && matches / words.length > 0.45) score += 8;
@@ -1641,11 +1642,9 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
         // 3. Choice matches
         let choiceHits = 0;
-        for (const ch of s.choices)
-        {
+        for (const ch of s.choices) {
           const cNorm = norm(ch.text);
-          if (cNorm.length > 2)
-          {
+          if (cNorm.length > 2) {
             if (bodyText.includes(cNorm)) choiceHits++;
             if (pageChoiceTexts.some(pt => pt.includes(cNorm) || cNorm.includes(pt))) choiceHits += 2;
           }
@@ -1653,8 +1652,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
         if (choiceHits > 0) score += choiceHits * 4;
 
-        if (score > bestScore && score >= 4)
-        {
+        if (score > bestScore && score >= 4) {
           bestScore = score;
           best = s;
         }
@@ -1663,30 +1661,26 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       return best;
     }
 
-    function updateActiveSlideUI()
-    {
+    function updateActiveSlideUI() {
       const cards = sh.querySelectorAll('.card');
       cards.forEach
-      (
-        c =>
-        {
-          const idx = parseInt(c.dataset.slideIdx, 10);
-          const isCur = activeSlideOnScreen && allSlides.indexOf(activeSlideOnScreen) === idx;
-          c.classList.toggle('active-on-screen', isCur);
-        }
-      );
+        (
+          c => {
+            const idx = parseInt(c.dataset.slideIdx, 10);
+            const isCur = activeSlideOnScreen && allSlides.indexOf(activeSlideOnScreen) === idx;
+            c.classList.toggle('active-on-screen', isCur);
+          }
+        );
     }
 
     /* -- CHOICE MATCHING HELPER -- */
-    function mapChoicesToSlide(slide, pageChoices)
-    {
+    function mapChoicesToSlide(slide, pageChoices) {
       const matchedMap = new Map();
       if (!slide || !slide.choices || !pageChoices || !pageChoices.length) return matchedMap;
 
       const allNorms = slide.choices.map(c => norm(c?.text || c));
 
-      for (let pi = 0; pi < pageChoices.length; pi++)
-      {
+      for (let pi = 0; pi < pageChoices.length; pi++) {
         const elmt = pageChoices[pi];
         if (isNonChoiceElement(elmt)) continue;
 
@@ -1702,19 +1696,16 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
         // 2. Strict letter badge matching (e.g. starts with "A)", "Option A", "Choice B", or testid="choice-0")
         // NEVER match arbitrary \b([A-D])\b inside random text like "Open Q&A"!
-        if (matchIdx === -1)
-        {
+        if (matchIdx === -1) {
           const startLetterMatch = rawText.match(/^\s*(?:option|choice|answer)?\s*([A-D])(?:\)|\.|\:|\s|$)/i) ||
             ariaLabel.match(/^\s*(?:option|choice|answer)?\s*([A-D])(?:\)|\.|\:|\s|$)/i);
           const testIdMatch = testId.match(/choice[-_]?([0-3]|[A-D])\b/i);
 
-          if (startLetterMatch)
-          {
+          if (startLetterMatch) {
             const token = startLetterMatch[1].toUpperCase();
             if (token >= 'A' && token <= 'D') matchIdx = token.charCodeAt(0) - 65;
           }
-          else if (testIdMatch)
-          {
+          else if (testIdMatch) {
             const token = testIdMatch[1].toUpperCase();
             if (token >= 'A' && token <= 'D') matchIdx = token.charCodeAt(0) - 65;
             else if (token >= '0' && token <= '3') matchIdx = parseInt(token, 10);
@@ -1725,8 +1716,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       }
 
       // 3. Positional fallback: when count matches and none are non-choice UI elements
-      if (matchedMap.size === 0 && pageChoices.length === slide.choices.length && slide.choices.length >= 2)
-      {
+      if (matchedMap.size === 0 && pageChoices.length === slide.choices.length && slide.choices.length >= 2) {
         const allAreChoices = pageChoices.every(el => !isNonChoiceElement(el));
         if (allAreChoices) for (let pi = 0; pi < pageChoices.length; pi++) { matchedMap.set(pageChoices[pi], pi); }
       }
@@ -1735,14 +1725,13 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     }
 
     /* -- SELECTION VERIFICATION HELPER -- */
-    function isChoiceSelectedOnPage(el)
-    {
+    function isChoiceSelectedOnPage(el) {
       if (!el || !document.body.contains(el)) return false;
       const btn = el.tagName === 'BUTTON' ? el : (el.closest('button, [role="button"]') || el);
 
       // 1. ARIA state
       if
-      (
+        (
         btn.getAttribute('aria-pressed') === 'true' ||
         btn.getAttribute('aria-checked') === 'true' ||
         btn.getAttribute('aria-selected') === 'true' ||
@@ -1752,7 +1741,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       // 2. Class names
       const cls = (btn.className || '').toLowerCase();
       if
-      (
+        (
         cls.includes('selected') ||
         cls.includes('active') ||
         cls.includes('voted') ||
@@ -1767,7 +1756,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       // 4. Mentimeter page text indicates submitted or answer locked
       const txt = (document.body.innerText || '').toLowerCase();
       if
-      (
+        (
         txt.includes('submitted') ||
         txt.includes('waiting for presenter') ||
         txt.includes('waiting for the next') ||
@@ -1780,8 +1769,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     }
 
     /* -- ROBUST CLICK SIMULATION (BRIDGES TO MAIN WORLD + SYNCHRONOUS INLINE SCRIPT) -- */
-    function dispatchReactClick(el)
-    {
+    function dispatchReactClick(el) {
       if (!el) return;
 
       try { el.focus(); } catch { }
@@ -1790,23 +1778,21 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       try { el.setAttribute('data-mc-click', marker); } catch { }
 
       // 1. Dispatch event across world boundary (on document with bubbles+composed)
-      try
-      {
+      try {
         document.dispatchEvent
-        (new CustomEvent
-          ('MC_TRIGGER_CLICK',
-            {
-              bubbles: true,
-              composed: true,
-              detail: { selector: `[data-mc-click="${marker}"], [data-mc-answer="correct"]` }
-            }
-          )
-        );
+          (new CustomEvent
+            ('MC_TRIGGER_CLICK',
+              {
+                bubbles: true,
+                composed: true,
+                detail: { selector: `[data-mc-click="${marker}"], [data-mc-answer="correct"]` }
+              }
+            )
+          );
       } catch { }
 
       // 2. Execute synchronous script in MAIN WORLD (100% reliable React Fiber onClick invoker)
-      try
-      {
+      try {
         const s = document.createElement('script');
         s.textContent = `(function()
         {
@@ -1901,8 +1887,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       } catch { }
 
       // 3. Isolated-world native events fallback
-      try
-      {
+      try {
         const rect = el.getBoundingClientRect();
         const opts =
         {
@@ -1925,35 +1910,29 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     }
 
     /* -- ON-PAGE HIGHLIGHTING APPLICATION -- */
-    function applySlideHighlights(slide)
-    {
+    function applySlideHighlights(slide) {
       if (!cfgAutoHl || slide.correctIndex == null) return;
       const pageChoices = findPageChoiceElements();
       if (!pageChoices.length) return;
       const matchedMap = mapChoicesToSlide(slide, pageChoices);
-      for (const [elmt, matchIdx] of matchedMap.entries())
-      {
+      for (const [elmt, matchIdx] of matchedMap.entries()) {
         const isCorrect = (matchIdx === slide.correctIndex);
         elmt.setAttribute(PAGE_ATTR, isCorrect ? 'correct' : 'wrong');
       }
     }
 
     /* -- RELIABLE CHOICE SELECTION (INVOKES MAIN WORLD REACT LISTENER) -- */
-    function attemptChoiceSelection(slide, attemptCount, delaySec)
-    {
+    function attemptChoiceSelection(slide, attemptCount, delaySec) {
       if (!cfgAutoSel || slide.hasAutoSelected) return;
       if (activeSlideOnScreen && activeSlideOnScreen !== slide) return;
 
       // Find current live correct element on live page
       let elToClick = document.querySelector('[data-mc-answer="correct"]');
-      if (!elToClick)
-      {
+      if (!elToClick) {
         const freshChoices = findPageChoiceElements();
         const map = mapChoicesToSlide(slide, freshChoices);
-        for (const [el, idx] of map.entries())
-        {
-          if (idx === slide.correctIndex)
-          {
+        for (const [el, idx] of map.entries()) {
+          if (idx === slide.correctIndex) {
             elToClick = el;
             if (cfgAutoHl) el.setAttribute(PAGE_ATTR, 'correct');
             break;
@@ -1961,8 +1940,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
         }
       }
 
-      if (!elToClick || !isElementVisuallyVisible(elToClick))
-      {
+      if (!elToClick || !isElementVisuallyVisible(elToClick)) {
         // Element not visually ready on screen yet, retry up to 20 times (4.0s)
         if (attemptCount < 20) setTimeout(() => attemptChoiceSelection(slide, attemptCount + 1, delaySec), 200);
         return;
@@ -1971,10 +1949,8 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       const btn = elToClick.tagName === 'BUTTON' ? elToClick : (elToClick.closest('button, [role="button"]') || elToClick);
 
       // If button is temporarily disabled (e.g. countdown still finishing), wait & retry!
-      if (btn.hasAttribute('disabled') || btn.getAttribute('aria-disabled') === 'true' || btn.disabled)
-      {
-        if (attemptCount < 20)
-        {
+      if (btn.hasAttribute('disabled') || btn.getAttribute('aria-disabled') === 'true' || btn.disabled) {
+        if (attemptCount < 20) {
           setTimeout(() => attemptChoiceSelection(slide, attemptCount + 1, delaySec), 200);
           return;
         }
@@ -1992,8 +1968,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
       // Check radio/checkbox inputs if any
       const radio = elToClick.querySelector('input[type="radio"], input[type="checkbox"]') || btn.querySelector('input[type="radio"], input[type="checkbox"]') || elToClick.closest('label')?.querySelector('input');
-      if (radio)
-      {
+      if (radio) {
         radio.checked = true;
         radio.dispatchEvent(new Event('input', { bubbles: true }));
         radio.dispatchEvent(new Event('change', { bubbles: true }));
@@ -2007,31 +1982,26 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
       const sIdx = allSlides.indexOf(slide);
       const card = sh.querySelector(`.card[data-slide-idx="${sIdx}"]`);
-      if (card)
-      {
+      if (card) {
         const rows = card.querySelectorAll('.choice');
         if (rows[slide.correctIndex]) rows[slide.correctIndex].classList.add('auto-selected');
       }
 
       // Follow-up reinforcement click after 200ms
       setTimeout
-      (
-        () =>
-        {
-          dispatchReactClick(btn);
-          if (cfgAutoSub) trySubmit();
-        }, 200
-      );
+        (
+          () => {
+            dispatchReactClick(btn);
+            if (cfgAutoSub) trySubmit();
+          }, 200
+        );
     }
 
-    function trySubmit()
-    {
+    function trySubmit() {
       const btns = Array.from(document.querySelectorAll('button, [role="button"]')).filter(b => !host.contains(b));
-      for (const b of btns)
-      {
+      for (const b of btns) {
         const t = (b.textContent || '').trim().toLowerCase();
-        if ((t === 'submit' || t === 'vote' || t === 'submit answer') && !b.disabled)
-        {
+        if ((t === 'submit' || t === 'vote' || t === 'submit answer') && !b.disabled) {
           dispatchReactClick(b);
           console.log('[MentiChecker] Auto-submitted answer');
           break;
@@ -2039,16 +2009,131 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       }
     }
 
+
+    /* -- AUTO-FILL QUIZ PLAYER NAME & JOIN LOBBY -- */
+    let hasAutoFilledQuizName = false;
+
+    function checkAndFillQuizName() {
+      if (!cfgAutoName || !cfgPlayerName) return;
+
+      const NAME_SELECTORS = [
+        'input[data-testid="quiz-player-name"]',
+        'input#quiz-name',
+        'input[name="quiz-name"]',
+        'input[data-testid*="player-name"]',
+        'input[data-testid*="quiz-name"]',
+        'input[placeholder*="name" i]',
+        'input[aria-label*="name" i]'
+      ].join(',');
+
+      const allInputs = Array.from(document.querySelectorAll(NAME_SELECTORS))
+        .filter(inp => !host.contains(inp) && isElementVisuallyVisible(inp));
+
+      if (!allInputs.length) {
+        if (hasAutoFilledQuizName && !document.querySelector(NAME_SELECTORS)) {
+          hasAutoFilledQuizName = false;
+        }
+        return;
+      }
+
+      const input = allInputs[0];
+
+      if (hasAutoFilledQuizName && input.dataset.mcFilled === cfgPlayerName) {
+        return;
+      }
+
+      const currentVal = (input.value || '').trim();
+      const needsChange = (currentVal !== cfgPlayerName);
+
+      if (needsChange) {
+        console.log(`[MentiChecker] Auto-filling quiz name "${cfgPlayerName}" (was "${currentVal}")`);
+
+        try { input.focus(); } catch (e) { }
+
+        if (input.hasAttribute('disabled') || input.disabled) {
+          input.removeAttribute('disabled');
+          try { input.disabled = false; } catch (e) { }
+        }
+
+        // 1. Native prototype setter to bypass React controlled component barrier
+        try {
+          const nativeSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+          if (nativeSetter) nativeSetter.call(input, cfgPlayerName);
+          else input.value = cfgPlayerName;
+        } catch (e) {
+          input.value = cfgPlayerName;
+        }
+
+        // 2. Dispatch React-compatible events
+        input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+        // 3. Trigger via MAIN world bridge
+        try {
+          document.dispatchEvent(
+            new CustomEvent('MC_SET_INPUT', {
+              bubbles: true,
+              composed: true,
+              detail: {
+                selector: 'input[data-testid="quiz-player-name"], #quiz-name, [name="quiz-name"]',
+                value: cfgPlayerName,
+                submit: true
+              }
+            })
+          );
+        } catch (e) { }
+
+        input.dataset.mcFilled = cfgPlayerName;
+        showPageBanner(`\uD83D\uDC64 Auto-entered Quiz Name: ${cfgPlayerName}`);
+        showToast(`\u2713 Auto-entered Quiz Name: ${cfgPlayerName}`);
+      }
+
+      // Find the join / submit button
+      const form = input.closest('form');
+      let submitBtn = document.querySelector('button[data-testid="quiz-player-form-submit"]');
+      if (!submitBtn && form) {
+        submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
+      }
+      if (!submitBtn) {
+        const btns = Array.from(document.querySelectorAll('button, [role="button"]'))
+          .filter(b => !host.contains(b) && isElementVisuallyVisible(b));
+        for (const b of btns) {
+          const t = (b.textContent || '').trim().toLowerCase();
+          if (t === 'join quiz' || t === 'join' || t === 'enter quiz' || t === 'ready' || t === 'go!' || t === 'go' || t === 'participate') {
+            submitBtn = b;
+            break;
+          }
+        }
+      }
+
+      if (submitBtn) {
+        setTimeout(() => {
+          if (submitBtn.hasAttribute('disabled') || submitBtn.disabled) {
+            submitBtn.removeAttribute('disabled');
+            try { submitBtn.disabled = false; } catch (e) { }
+          }
+          console.log('[MentiChecker] Submitting quiz name form');
+          dispatchReactClick(submitBtn);
+          hasAutoFilledQuizName = true;
+        }, 180);
+      } else if (form) {
+        setTimeout(() => {
+          try {
+            form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+            hasAutoFilledQuizName = true;
+          } catch (e) { }
+        }, 180);
+      }
+    }
+
     /* -- SYNC ON-PAGE HIGHLIGHTING & TIMER-BASED SELECTION -- */
     // RULE: Inside MentiChecker extension, answers are displayed IMMEDIATELY without any timer.
-    // On the live menti.com presentation slide, wait 0.5s–1.5s randomly before revealing green highlight & selecting.
-    function syncPageHighlightAndSelect()
-    {
+    // On the live menti.com presentation slide, wait 0.5s-1.5s randomly before revealing green highlight & selecting.
+    function syncPageHighlightAndSelect() {
+      checkAndFillQuizName();
       const current = detectActiveSlide();
-      if (current && activeSlideOnScreen && activeSlideOnScreen !== current)
-      {
-        if (activeSlideOnScreen.onSlideTimer)
-        {
+      if (current && activeSlideOnScreen && activeSlideOnScreen !== current) {
+        if (activeSlideOnScreen.onSlideTimer) {
           clearTimeout(activeSlideOnScreen.onSlideTimer);
           activeSlideOnScreen.onSlideTimer = null;
         }
@@ -2057,8 +2142,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       if (current) activeSlideOnScreen = current;
       updateActiveSlideUI();
 
-      if (!activeSlideOnScreen)
-      {
+      if (!activeSlideOnScreen) {
         clearPageHighlights();
         return;
       }
@@ -2068,8 +2152,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
       const hasCorrectAnswer = (slideToUse.correctIndex != null && slideToUse.correctIndex >= 0);
 
-      if (!hasCorrectAnswer)
-      {
+      if (!hasCorrectAnswer) {
         clearPageHighlights();
         if (!slideToUse.solvingAI) ensureApiKeyLoaded().then(key => { if (key && slideToUse.correctIndex == null && !slideToUse.solvingAI) solveSingleSlide(slideToUse); });
         return;
@@ -2077,12 +2160,10 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
       // CRITICAL REQUIREMENT: START AUTOPICK ONLY WHEN OPTIONS LIST IS VISUALLY APPEARED ON THE PAGE!
       const optionsVisible = areOptionsVisuallyAppeared(slideToUse);
-      if (!optionsVisible)
-      {
+      if (!optionsVisible) {
         // Options have not appeared visually yet (countdown or transition in progress).
         // Clear any premature timers and wait until choices become visible on screen!
-        if (slideToUse.onSlideTimer)
-        {
+        if (slideToUse.onSlideTimer) {
           clearTimeout(slideToUse.onSlideTimer);
           slideToUse.onSlideTimer = null;
         }
@@ -2094,14 +2175,11 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       if (cfgAutoHl) applySlideHighlights(slideToUse);
       else clearPageHighlights();
 
-      // 2. START AUTOPICK CLICK (0.5s – 1.5s RANDOM DELAY AFTER OPTIONS VISUALLY APPEARED!)
-      if (cfgAutoSel && !slideToUse.hasAutoSelected)
-      {
-        if (!slideToUse.slideTimerFired)
-        {
-          if (!slideToUse.onSlideTimer)
-          {
-            const delayMs = Math.floor(Math.random() * 1001) + 500; // 500ms to 1500ms (0.5s–1.5s)
+      // 2. START AUTOPICK CLICK (0.5s - 1.5s RANDOM DELAY AFTER OPTIONS VISUALLY APPEARED!)
+      if (cfgAutoSel && !slideToUse.hasAutoSelected) {
+        if (!slideToUse.slideTimerFired) {
+          if (!slideToUse.onSlideTimer) {
+            const delayMs = Math.floor(Math.random() * 1001) + 500; // 500ms to 1500ms (0.5s-1.5s)
             const delaySec = (delayMs / 1000).toFixed(2);
             slideToUse.slideDelaySec = delaySec;
 
@@ -2109,16 +2187,15 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
             showPageBanner(`⏱ Options appeared! Choice ${letter} auto-selecting in ${delaySec}s...`);
 
             slideToUse.onSlideTimer = setTimeout
-            (
-              () =>
-              {
-                slideToUse.onSlideTimer = null;
-                slideToUse.slideTimerFired = true;
+              (
+                () => {
+                  slideToUse.onSlideTimer = null;
+                  slideToUse.slideTimerFired = true;
 
-                // Auto-select / click the choice on the live slide NOW
-                if (cfgAutoSel && !slideToUse.hasAutoSelected) attemptChoiceSelection(slideToUse, 0, delaySec);
-              }, delayMs
-            );
+                  // Auto-select / click the choice on the live slide NOW
+                  if (cfgAutoSel && !slideToUse.hasAutoSelected) attemptChoiceSelection(slideToUse, 0, delaySec);
+                }, delayMs
+              );
           }
         }
         else attemptChoiceSelection(slideToUse, 0, slideToUse.slideDelaySec || '1.0');
@@ -2126,8 +2203,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     }
 
     /* -- ANSWER PARSER (HANDLES ALL FORMATS LIKE **A**, A), A, ETC) -- */
-    function parseLetterFromAIResponse(rawText, choices)
-    {
+    function parseLetterFromAIResponse(rawText, choices) {
       if (!rawText) return null;
       const up = rawText.trim().toUpperCase();
 
@@ -2148,8 +2224,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
       // 5. Match by choice text similarity (supports "Yes", "No", "True", "False", etc)
       const cleanUp = up.toLowerCase().replace(/[^a-z0-9]/g, ' ');
-      for (let i = 0; i < choices.length; i++)
-      {
+      for (let i = 0; i < choices.length; i++) {
         const rawText = typeof choices[i] === 'string' ? choices[i] : (choices[i]?.text || '');
         const chText = rawText.toLowerCase().replace(/^[a-h][).\s:-]+/i, '').replace(/[^a-z0-9]/g, ' ').trim();
         if (chText && cleanUp.includes(chText)) return String.fromCharCode(65 + i);
@@ -2161,65 +2236,54 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     let lastSolverError = null;
 
     /* -- AI SOLVER (BRIDGES TO BACKGROUND SCRIPT TO BYPASS CSP) -- */
-    async function solveWithAI(question, choices)
-    {
+    async function solveWithAI(question, choices) {
       // 1. First check built-in verified answers (0ms latency)
       const builtin = getBuiltinAnswer(question, choices);
-      if (builtin)
-      {
+      if (builtin) {
         console.log('[MentiChecker] Solved via verified knowledge base:', builtin);
         return builtin;
       }
 
       const key = await ensureApiKeyLoaded();
-      if (!key)
-      {
+      if (!key) {
         lastSolverError = 'No API key entered in Settings';
         return null;
       }
 
       // 2. Try Background Script (runs in extension origin, bypasses menti.com CSP)
-      try
-      {
+      try {
         const bgResponse = await new Promise
-        (
-          (resolve) =>
-          {
-            chrome.runtime.sendMessage
-            (
-              { type: 'SOLVE_GEMINI', key, question, choices }, (res) =>
-              {
-                if (chrome.runtime.lastError)
-                {
-                  const msg = chrome.runtime.lastError.message || '';
-                  if (msg.includes('invalidated')) lastSolverError = 'Extension reloaded: please refresh page (F5)';
-                  else lastSolverError = 'Background error: ' + msg;
-                  console.warn('[MentiChecker] BG runtime error:', msg);
-                  resolve(null);
-                }
-                else resolve(res);
-              }
-            );
-          }
-        );
+          (
+            (resolve) => {
+              chrome.runtime.sendMessage
+                (
+                  { type: 'SOLVE_GEMINI', key, question, choices }, (res) => {
+                    if (chrome.runtime.lastError) {
+                      const msg = chrome.runtime.lastError.message || '';
+                      if (msg.includes('invalidated')) lastSolverError = 'Extension reloaded: please refresh page (F5)';
+                      else lastSolverError = 'Background error: ' + msg;
+                      console.warn('[MentiChecker] BG runtime error:', msg);
+                      resolve(null);
+                    }
+                    else resolve(res);
+                  }
+                );
+            }
+          );
 
-        if (bgResponse)
-        {
-          if (bgResponse.success && bgResponse.text)
-          {
+        if (bgResponse) {
+          if (bgResponse.success && bgResponse.text) {
             const parsed = parseLetterFromAIResponse(bgResponse.text, choices);
             if (parsed) return parsed;
             lastSolverError = 'AI response format error: ' + bgResponse.text.slice(0, 30);
           }
-          else if (bgResponse.error)
-          {
+          else if (bgResponse.error) {
             lastSolverError = bgResponse.error;
             console.warn('[MentiChecker] Gemini API error:', bgResponse.error);
           }
         }
       }
-      catch (e)
-      {
+      catch (e) {
         lastSolverError = e.message;
         console.warn('[MentiChecker] BG Bridge failed:', e);
       }
@@ -2227,8 +2291,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       return null;
     }
 
-    async function solveSingleSlide(slide)
-    {
+    async function solveSingleSlide(slide) {
       if (slide.solvingAI || slide.correctIndex != null) return;
       slide.solvingAI = true;
       const slideIdx = allSlides.indexOf(slide);
@@ -2242,11 +2305,9 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       slide.solvingAI = false;
       panelChoices.forEach(c => c.classList.remove('ai-thinking'));
 
-      if (letter)
-      {
+      if (letter) {
         const ci = letter.charCodeAt(0) - 65;
-        if (ci >= 0 && ci < slide.choices.length)
-        {
+        if (ci >= 0 && ci < slide.choices.length) {
           slide.correctIndex = ci;
           slide.correctText = slide.choices[ci].text;
 
@@ -2259,40 +2320,33 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       }
     }
 
-    async function runSolver()
-    {
+    async function runSolver() {
       if (solving) return;
       const key = await ensureApiKeyLoaded();
-      if (!key)
-      {
+      if (!key) {
         // Solve all questions that match verified knowledge base (polls + quizzes)
         let localSolved = 0;
         allSlides.forEach
-        (
-          (slide, sIdx) =>
-          {
-            if (!slide.isInfo && slide.correctIndex == null)
-            {
-              const builtin = getBuiltinAnswer(slide.question, slide.choices);
-              if (builtin)
-              {
-                const ci = builtin.charCodeAt(0) - 65;
-                slide.correctIndex = ci;
-                slide.correctText = slide.choices[ci].text;
-                markCardAsSolved(sIdx, ci);
+          (
+            (slide, sIdx) => {
+              if (!slide.isInfo && slide.correctIndex == null) {
+                const builtin = getBuiltinAnswer(slide.question, slide.choices);
+                if (builtin) {
+                  const ci = builtin.charCodeAt(0) - 65;
+                  slide.correctIndex = ci;
+                  slide.correctText = slide.choices[ci].text;
+                  markCardAsSolved(sIdx, ci);
+                  localSolved++;
+                }
+              }
+              else if (!slide.isInfo && slide.correctIndex != null) {
+                markCardAsSolved(sIdx, slide.correctIndex);
                 localSolved++;
               }
             }
-            else if (!slide.isInfo && slide.correctIndex != null)
-            {
-              markCardAsSolved(sIdx, slide.correctIndex);
-              localSolved++;
-            }
-          }
-        );
+          );
         const interactiveCount = allSlides.filter(s => !s.isInfo).length;
-        if (localSolved > 0)
-        {
+        if (localSolved > 0) {
           aiStatus.textContent = '\u2713 ' + localSolved + ' / ' + interactiveCount + ' verified & solved';
           showToast('\u2713 ' + localSolved + ' correct answers highlighted');
           syncPageHighlightAndSelect();
@@ -2311,24 +2365,20 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
       // 1. Instant check for verified database & pre-solved slides
       const remainingToSolve = [];
-      for (let i = 0; i < interactive.length; i++)
-      {
+      for (let i = 0; i < interactive.length; i++) {
         const slide = interactive[i];
         const slideIdx = allSlides.indexOf(slide);
 
-        if (slide.correctIndex != null)
-        {
+        if (slide.correctIndex != null) {
           solvedCount++;
           markCardAsSolved(slideIdx, slide.correctIndex);
           continue;
         }
 
         const builtin = getBuiltinAnswer(slide.question, slide.choices);
-        if (builtin)
-        {
+        if (builtin) {
           const ci = builtin.charCodeAt(0) - 65;
-          if (ci >= 0 && ci < slide.choices.length)
-          {
+          if (ci >= 0 && ci < slide.choices.length) {
             slide.correctIndex = ci;
             slide.correctText = slide.choices[ci].text;
             markCardAsSolved(slideIdx, ci);
@@ -2340,8 +2390,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
         remainingToSolve.push(slide);
       }
 
-      async function solveWorker(slide)
-      {
+      async function solveWorker(slide) {
         if (slide.correctIndex != null) return;
         slide.solvingAI = true;
         const slideIdx = allSlides.indexOf(slide);
@@ -2354,11 +2403,9 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
         slide.solvingAI = false;
         panelChoices.forEach(c => c.classList.remove('ai-thinking'));
 
-        if (letter)
-        {
+        if (letter) {
           const ci = letter.charCodeAt(0) - 65;
-          if (ci >= 0 && ci < slide.choices.length)
-          {
+          if (ci >= 0 && ci < slide.choices.length) {
             slide.correctIndex = ci;
             slide.correctText = slide.choices[ci].text;
             markCardAsSolved(slideIdx, ci);
@@ -2372,8 +2419,7 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
         aiStatus.textContent = `⚡ Solving: ${completed} / ${totalRemaining} completed (${solvedCount} solved)`;
       }
 
-      if (remainingToSolve.length === 0)
-      {
+      if (remainingToSolve.length === 0) {
         aiStatus.textContent = `✓ All ${interactive.length} questions solved!`;
         showToast(`✓ All ${interactive.length} questions solved!`);
         solving = false;
@@ -2385,77 +2431,65 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
       // Show thinking spinners on cards being solved
       remainingToSolve.forEach
-      (
-        slide =>
-        {
-          const slideIdx = allSlides.indexOf(slide);
-          const card = sh.querySelector(`.card[data-slide-idx="${slideIdx}"]`);
-          const panelChoices = card?.querySelectorAll('.choice') ?? [];
-          panelChoices.forEach(c => c.classList.add('ai-thinking'));
-        }
-      );
+        (
+          slide => {
+            const slideIdx = allSlides.indexOf(slide);
+            const card = sh.querySelector(`.card[data-slide-idx="${slideIdx}"]`);
+            const panelChoices = card?.querySelectorAll('.choice') ?? [];
+            panelChoices.forEach(c => c.classList.add('ai-thinking'));
+          }
+        );
 
       if (solvedCount > 0) aiStatus.textContent = `⚡ 1-request solving all ${interactive.length} questions (${remainingToSolve.length} via AI, ${solvedCount} pre-verified)...`;
       else aiStatus.textContent = `⚡ 1-request solving all ${interactive.length} questions...`;
 
       // 2. SEND EXACTLY ONE API REQUEST FOR ALL QUESTIONS (List of questions -> string of answers)
       const questionsPayload = remainingToSolve.map
-      (
-        s => 
         (
-          {
-            question: s.question,
-            choices: s.choices.map(c => c.text || c)
-          }
-        )
-      );
+          s =>
+          (
+            {
+              question: s.question,
+              choices: s.choices.map(c => c.text || c)
+            }
+          )
+        );
 
-      try
-      {
+      try {
         const res = await new Promise(resolve => { chrome.runtime.sendMessage({ type: 'SOLVE_ALL_IN_ONE', key, questions: questionsPayload }, r => resolve(r || null)); });
 
         console.log('[MentiChecker] 1-request result:', res);
 
-        if (res && res.success && res.letters && res.letters.length > 0)
-        {
+        if (res && res.success && res.letters && res.letters.length > 0) {
           res.letters.forEach
-          (
-            (letter, i) =>
-            {
-              if (i < remainingToSolve.length && letter)
-              {
-                const slide = remainingToSolve[i];
-                const slideIdx = allSlides.indexOf(slide);
-                const ci = letter.charCodeAt(0) - 65;
-                if (ci >= 0 && ci < slide.choices.length)
-                {
-                  slide.correctIndex = ci;
-                  slide.correctText = slide.choices[ci].text;
-                  markCardAsSolved(slideIdx, ci);
-                  solvedCount++;
+            (
+              (letter, i) => {
+                if (i < remainingToSolve.length && letter) {
+                  const slide = remainingToSolve[i];
+                  const slideIdx = allSlides.indexOf(slide);
+                  const ci = letter.charCodeAt(0) - 65;
+                  if (ci >= 0 && ci < slide.choices.length) {
+                    slide.correctIndex = ci;
+                    slide.correctText = slide.choices[ci].text;
+                    markCardAsSolved(slideIdx, ci);
+                    solvedCount++;
+                  }
                 }
               }
-            }
-          );
+            );
         }
-        else if (res?.error)
-        {
+        else if (res?.error) {
           lastSolverError = res.error;
           console.warn('[MentiChecker] 1-request error:', res.error);
           const isQuotaErr = res.error.includes('429') || res.error.includes('quota') || res.error.includes('limit');
           // Fallback: solve individually ONLY if not a hard quota error
-          if (!isQuotaErr)
-          {
-            for (const slide of remainingToSolve)
-            {
-              if (slide.correctIndex == null)
-              {
+          if (!isQuotaErr) {
+            for (const slide of remainingToSolve) {
+              if (slide.correctIndex == null) {
                 const letter = await solveWithAI(slide.question, slide.choices);
-                if (letter)
-                {
+                if (letter) {
                   const ci = letter.charCodeAt(0) - 65;
-                  if (ci >= 0 && ci < slide.choices.length)
-                  {
+                  if (ci >= 0 && ci < slide.choices.length) {
                     slide.correctIndex = ci;
                     slide.correctText = slide.choices[ci].text;
                     markCardAsSolved(allSlides.indexOf(slide), ci);
@@ -2467,39 +2501,33 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
           }
         }
       }
-      catch (err)
-      {
+      catch (err) {
         lastSolverError = err.message;
         console.warn('[MentiChecker] 1-request exception:', err);
       }
-      finally
-      {
+      finally {
         remainingToSolve.forEach
-        (
-          slide =>
-          {
-            const slideIdx = allSlides.indexOf(slide);
-            const card = sh.querySelector(`.card[data-slide-idx="${slideIdx}"]`);
-            const panelChoices = card?.querySelectorAll('.choice') ?? [];
-            panelChoices.forEach(c => c.classList.remove('ai-thinking'));
-          }
-        );
+          (
+            slide => {
+              const slideIdx = allSlides.indexOf(slide);
+              const card = sh.querySelector(`.card[data-slide-idx="${slideIdx}"]`);
+              const panelChoices = card?.querySelectorAll('.choice') ?? [];
+              panelChoices.forEach(c => c.classList.remove('ai-thinking'));
+            }
+          );
       }
 
-      if (solvedCount === interactive.length)
-      {
+      if (solvedCount === interactive.length) {
         aiStatus.textContent = `✓ All ${solvedCount} questions solved!`;
         showToast(`✓ All ${solvedCount} questions solved in 1 request!`);
       }
-      else if (solvedCount > 0)
-      {
+      else if (solvedCount > 0) {
         const failed = interactive.length - solvedCount;
         const errReason = lastSolverError ? `: ${lastSolverError}` : '';
         aiStatus.textContent = `✓ ${solvedCount} / ${interactive.length} solved (${failed} failed${errReason})`;
         showToast(`✓ ${solvedCount} solved · ${failed} failed`);
       }
-      else
-      {
+      else {
         const errTxt = lastSolverError ? ('❌ ' + lastSolverError) : '❌ Could not solve — check API key in Settings';
         aiStatus.textContent = errTxt;
         showToast(lastSolverError || 'Could not reach AI — check your API key');
@@ -2515,21 +2543,18 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
     aiBtn.addEventListener('click', () => { runSolver(); });
 
     /* -- SCAN -- */
-    function doScan()
-    {
+    function doScan() {
       allSlides.forEach
-      (
-        s =>
-        {
-          if (s.onSlideTimer)
-          {
-            clearTimeout(s.onSlideTimer);
-            s.onSlideTimer = null;
+        (
+          s => {
+            if (s.onSlideTimer) {
+              clearTimeout(s.onSlideTimer);
+              s.onSlideTimer = null;
+            }
+            s.slideTimerFired = false;
+            s.hasAutoSelected = false;
           }
-          s.slideTimerFired = false;
-          s.hasAutoSelected = false;
-        }
-      );
+        );
       showLoading();
       filters.style.display = 'none';
       foot.style.display = 'none';
@@ -2538,17 +2563,14 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
       fabDot.classList.remove('on');
       clearPageHighlights();
 
-      setTimeout(() =>
-      {
+      setTimeout(() => {
         const raw = extractSlideDeck();
-        if (!raw)
-        {
+        if (!raw) {
           showError('Could not find slide data.<br>Make sure the Mentimeter page is fully loaded.');
           return;
         }
         const slides = parseSlides(raw);
-        if (!slides.length)
-        {
+        if (!slides.length) {
           showError('No interactive slides found on this page.');
           return;
         }
@@ -2579,32 +2601,30 @@ const MCSS = '\n  *, *::before, *::after { box-sizing: border-box; margin: 0; pa
 
     /* -- CONTINUOUS PAGE WATCHER / OBSERVER -- */
     let syncDebounce = null;
-    function triggerSync()
-    {
+    function triggerSync() {
       clearTimeout(syncDebounce);
       syncDebounce = setTimeout(syncPageHighlightAndSelect, 150);
     }
 
     const observer = new MutationObserver
-    (
-      (mutations) =>
-      {
-        const relevant = mutations.some(m => !host.contains(m.target));
-        if (relevant) triggerSync();
-      }
-    );
+      (
+        (mutations) => {
+          const relevant = mutations.some(m => !host.contains(m.target));
+          if (relevant) triggerSync();
+        }
+      );
 
     observer.observe
-    (
-      document.body,
-      {
-        childList: true,
-        subtree: true,
-        characterData: true
-      }
-    );
+      (
+        document.body,
+        {
+          childList: true,
+          subtree: true,
+          characterData: true
+        }
+      );
 
-    setInterval(syncPageHighlightAndSelect, 350);
+    setInterval(() => { syncPageHighlightAndSelect(); checkAndFillQuizName(); }, 350);
 
     /* -- INITIALIZATION -- */
     const autoInit = () => setTimeout(() => { doScan(); openPanel(); }, 700);

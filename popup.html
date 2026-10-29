@@ -1,626 +1,689 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>MentiChecker</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <style>
-      *,
-      *::before,
-      *::after
-      {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+
+<head>
+  <meta charset="UTF-8" />
+  <title>MentiChecker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: #0C0C0F;
+      --bg: #111116;
+      --surface: #18181F;
+      --card: #1E1E28;
+      --border: #2A2A36;
+      --border2: #333344;
+      --white: #F0EEE8;
+      --muted: #6B6B80;
+      --dim: #3A3A50;
+
+      --cyan: #00C4CC;
+      --mint: #3DFFA0;
+      --orange: #FF7A35;
+      --vine: #8B1A35;
+      --purple: #5B21B6;
+      --lpurple: #7C3AED;
+
+      --font: 'DM Sans', system-ui, sans-serif;
+      --mono: 'DM Mono', monospace;
+    }
+
+    html,
+    body {
+      width: 420px;
+      min-height: 160px;
+      max-height: 580px;
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font);
+      font-size: 13px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* -- HEADER -- */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 13px 16px 12px;
+      border-bottom: 1px solid var(--border);
+      background: var(--black);
+    }
+
+    .logo-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #1C1C3E 0%, #0E0E22 100%);
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .logo-mark svg {
+      display: block;
+    }
+
+    .title-block {
+      flex: 1;
+    }
+
+    .title-block h1 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      color: var(--white);
+    }
+
+    .title-block span {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    .header-stat {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--cyan);
+      background: rgba(0, 196, 204, 0.08);
+      border: 1px solid rgba(0, 196, 204, 0.2);
+      padding: 3px 10px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+      display: none;
+    }
+
+    /* -- AUTO-ANSWER BAR -- */
+    .auto-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 16px;
+      background: rgba(0, 196, 204, 0.05);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .auto-bar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .auto-bar-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .auto-bar-sub {
+      font-size: 9.5px;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    .auto-btn {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      letter-spacing: 0.4px;
+      border: 1px solid rgba(61, 255, 160, 0.3);
+      color: var(--mint);
+      background: rgba(61, 255, 160, 0.1);
+      box-shadow: 0 0 8px rgba(61, 255, 160, 0.2);
+    }
+
+    .auto-btn.off {
+      border-color: var(--border2);
+      color: var(--muted);
+      background: transparent;
+      box-shadow: none;
+    }
+
+    /* -- PLAYER NAME BAR -- */
+    .player-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 16px;
+      background: rgba(168, 85, 247, 0.06);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .player-bar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex: 1;
+    }
+
+    .player-bar-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .player-input {
+      font-family: var(--font);
+      font-size: 11.5px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .player-input:focus {
+      border-color: var(--cyan);
+    }
+
+    .player-btn {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #D8B4FE;
+      background: rgba(168, 85, 247, 0.12);
+      box-shadow: 0 0 8px rgba(168, 85, 247, 0.2);
+      transition: all 0.15s ease;
+      align-self: flex-end;
+      margin-bottom: 1px;
+    }
+
+    .player-btn:hover {
+      background: rgba(168, 85, 247, 0.25);
+      color: var(--white);
+    }
+
+    .footer-author {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      color: var(--cyan);
+      opacity: 0.9;
+    }
+
+    /* -- FILTERS -- */
+    .filters {
+      display: none;
+      padding: 8px 16px;
+      gap: 6px;
+      border-bottom: 1px solid var(--border);
+      background: var(--black);
+      align-items: center;
+    }
+
+    .filter-label {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--dim);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-right: 4px;
+    }
+
+    .f-btn {
+      font-family: var(--font);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 2px;
+      border: 1px solid var(--border2);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      letter-spacing: 0.1px;
+    }
+
+    .f-btn:hover {
+      color: var(--white);
+      border-color: var(--dim);
+    }
+
+    .f-btn.active {
+      background: var(--vine);
+      color: var(--white);
+      border-color: var(--vine);
+    }
+
+    .f-btn[data-filter="quiz"].active {
+      background: transparent;
+      color: var(--orange);
+      border-color: var(--orange);
+    }
+
+    .f-btn[data-filter="mc"].active {
+      background: transparent;
+      color: var(--mint);
+      border-color: var(--mint);
+    }
+
+    .f-btn[data-filter="info"].active {
+      background: transparent;
+      color: var(--cyan);
+      border-color: var(--cyan);
+    }
+
+    /* -- SCROLL -- */
+    .scroll {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 10px 14px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .scroll::-webkit-scrollbar-thumb {
+      background: var(--border2);
+      border-radius: 2px;
+    }
+
+    /* -- STATES -- */
+    .state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-align: center;
+      padding: 38px 20px;
+    }
+
+    .state-symbol {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #1C1C3E 0%, #0E0E22 100%);
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.25), 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .state h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .state p {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .btn-scan {
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--black);
+      background: var(--cyan);
+      border: none;
+      padding: 9px 22px;
+      border-radius: 3px;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .btn-scan:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+
+    .btn-scan:active {
+      transform: none;
+    }
+
+    .btn-scan:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .loader {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--border2);
+      border-top-color: var(--cyan);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
       }
-
-      :root
-      {
-        --black: #0C0C0F;
-        --bg: #111116;
-        --surface: #18181F;
-        --card: #1E1E28;
-        --border: #2A2A36;
-        --border2: #333344;
-        --white: #F0EEE8;
-        --muted: #6B6B80;
-        --dim: #3A3A50;
-
-        --cyan: #00C4CC;
-        --mint: #3DFFA0;
-        --orange: #FF7A35;
-        --vine: #8B1A35;
-        --purple: #5B21B6;
-        --lpurple: #7C3AED;
-
-        --font: 'DM Sans', system-ui, sans-serif;
-        --mono: 'DM Mono', monospace;
-      }
-
-      html, body
-      {
-        width: 420px;
-        min-height: 160px;
-        max-height: 580px;
-        background: var(--bg);
-        color: var(--white);
-        font-family: var(--font);
-        font-size: 13px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-      }
-
-      /* -- HEADER -- */
-      .header
-      {
-        display: flex;
-        align-items: center;
-        gap: 0;
-        padding: 13px 16px 12px;
-        border-bottom: 1px solid var(--border);
-        background: var(--black);
-      }
-
-      .logo-mark
-      {
-        width: 30px;
-        height: 30px;
-        border-radius: 8px;
-        background: linear-gradient(135deg, #1C1C3E 0%, #0E0E22 100%);
-        border: 1px solid rgba(0, 240, 255, 0.4);
-        box-shadow: 0 0 14px rgba(0, 240, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 10px;
-        flex-shrink: 0;
-      }
-
-      .logo-mark svg { display: block; }
-
-      .title-block { flex: 1; }
-
-      .title-block h1
-      {
-        font-size: 14px;
-        font-weight: 600;
-        letter-spacing: -0.2px;
-        color: var(--white);
-      }
-
-      .title-block span
-      {
-        font-size: 10px;
-        color: var(--muted);
-        font-weight: 400;
-        letter-spacing: 0.3px;
-      }
-
-      .header-stat
-      {
-        font-family: var(--mono);
-        font-size: 10px;
-        font-weight: 500;
-        color: var(--cyan);
-        background: rgba(0, 196, 204, 0.08);
-        border: 1px solid rgba(0, 196, 204, 0.2);
-        padding: 3px 10px;
-        border-radius: 3px;
-        letter-spacing: 0.5px;
-        display: none;
-      }
-
-      /* -- AUTO-ANSWER BAR -- */
-      .auto-bar
-      {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 7px 16px;
-        background: rgba(0, 196, 204, 0.05);
-        border-bottom: 1px solid var(--border);
-        flex-shrink: 0;
-      }
-
-      .auto-bar-info
-      {
-        display: flex;
-        flex-direction: column;
-        gap: 1px;
-      }
-
-      .auto-bar-title
-      {
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--white);
-      }
-
-      .auto-bar-sub
-      {
-        font-size: 9.5px;
-        color: var(--muted);
-        font-family: var(--mono);
-      }
-
-      .auto-btn
-      {
-        font-family: var(--mono);
-        font-size: 9.5px;
-        font-weight: 700;
-        padding: 3px 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.15s ease;
-        letter-spacing: 0.4px;
-        border: 1px solid rgba(61, 255, 160, 0.3);
-        color: var(--mint);
-        background: rgba(61, 255, 160, 0.1);
-        box-shadow: 0 0 8px rgba(61, 255, 160, 0.2);
-      }
-
-      .auto-btn.off
-      {
-        border-color: var(--border2);
-        color: var(--muted);
-        background: transparent;
-        box-shadow: none;
-      }
-
-      .footer-author
-      {
-        font-family: var(--mono);
-        font-size: 9.5px;
-        color: var(--cyan);
-        opacity: 0.9;
-      }
-
-      /* -- FILTERS -- */
-      .filters
-      {
-        display: none;
-        padding: 8px 16px;
-        gap: 6px;
-        border-bottom: 1px solid var(--border);
-        background: var(--black);
-        align-items: center;
-      }
-
-      .filter-label
-      {
-        font-size: 10px;
-        font-weight: 500;
-        color: var(--dim);
-        letter-spacing: 0.8px;
-        text-transform: uppercase;
-        margin-right: 4px;
-      }
-
-      .f-btn
-      {
-        font-family: var(--font);
-        font-size: 11px;
-        font-weight: 500;
-        padding: 4px 12px;
-        border-radius: 2px;
-        border: 1px solid var(--border2);
-        background: transparent;
-        color: var(--muted);
-        cursor: pointer;
-        transition: all 0.15s ease;
-        letter-spacing: 0.1px;
-      }
-
-      .f-btn:hover
-      {
-        color: var(--white);
-        border-color: var(--dim);
-      }
-
-      .f-btn.active
-      {
-        background: var(--vine);
-        color: var(--white);
-        border-color: var(--vine);
-      }
-
-      .f-btn[data-filter="quiz"].active
-      {
-        background: transparent;
-        color: var(--orange);
-        border-color: var(--orange);
-      }
-
-      .f-btn[data-filter="mc"].active
-      {
-        background: transparent;
-        color: var(--mint);
-        border-color: var(--mint);
-      }
-
-      .f-btn[data-filter="info"].active
-      {
-        background: transparent;
-        color: var(--cyan);
-        border-color: var(--cyan);
-      }
-
-      /* -- SCROLL -- */
-      .scroll
-      {
-        flex: 1;
-        overflow-y: auto;
-        overflow-x: hidden;
-        padding: 10px 14px 10px;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-
-      .scroll::-webkit-scrollbar { width: 4px; }
-
-      .scroll::-webkit-scrollbar-track { background: transparent; }
-
-      .scroll::-webkit-scrollbar-thumb
-      {
-        background: var(--border2);
-        border-radius: 2px;
-      }
-
-      /* -- STATES -- */
-      .state
-      {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        text-align: center;
-        padding: 38px 20px;
-      }
-
-      .state-symbol
-      {
-        width: 46px;
-        height: 46px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #1C1C3E 0%, #0E0E22 100%);
-        border: 1px solid rgba(0, 240, 255, 0.4);
-        box-shadow: 0 0 18px rgba(0, 240, 255, 0.25), 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .state h2
-      {
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--white);
-      }
-
-      .state p
-      {
-        font-size: 11px;
-        color: var(--muted);
-        line-height: 1.6;
-      }
-
-      .btn-scan
-      {
-        font-family: var(--font);
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--black);
-        background: var(--cyan);
-        border: none;
-        padding: 9px 22px;
-        border-radius: 3px;
-        cursor: pointer;
-        letter-spacing: 0.3px;
-        transition: opacity 0.15s, transform 0.1s;
-      }
-
-      .btn-scan:hover
-      {
-        opacity: 0.88;
-        transform: translateY(-1px);
-      }
-
-      .btn-scan:active { transform: none; }
-
-      .btn-scan:disabled
-      {
-        opacity: 0.4;
-        cursor: not-allowed;
-        transform: none;
-      }
-
-      .loader
-      {
-        width: 22px;
-        height: 22px;
-        border: 2px solid var(--border2);
-        border-top-color: var(--cyan);
-        border-radius: 50%;
-        animation: spin 0.6s linear infinite;
-      }
-
-      @keyframes spin { to { transform: rotate(360deg); } }
-
-      /* -- CARDS -- */
-      .card
-      {
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        background: var(--surface);
-        overflow: hidden;
-        transition: border-color 0.15s;
-      }
-
-      .card:hover { border-color: var(--border2); }
-
-      .card-top
-      {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        padding: 10px 12px;
-        cursor: pointer;
-        user-select: none;
-        -webkit-user-select: none;
-      }
-
-      /* left accent stripe */
-      .card-stripe
-      {
-        width: 2px;
-        flex-shrink: 0;
-        border-radius: 2px;
-        align-self: stretch;
-        min-height: 16px;
-        background: var(--dim);
-        margin-top: 2px;
-      }
-
-      .stripe-quiz { background: var(--orange); }
-
-      .stripe-mc { background: var(--mint); }
-
-      .stripe-info { background: var(--cyan); }
-
-      .card-middle
-      {
-        flex: 1;
-        min-width: 0;
-      }
-
-      .card-tag
-      {
-        font-family: var(--mono);
-        font-size: 8.5px;
-        font-weight: 500;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        margin-bottom: 4px;
-        color: var(--dim);
-      }
-
-      .tag-quiz { color: var(--orange); }
-
-      .tag-mc { color: var(--mint); }
-
-      .tag-info { color: var(--cyan); }
-
-      .card-q
-      {
-        font-size: 12.5px;
-        font-weight: 500;
-        line-height: 1.5;
-        color: var(--white);
-      }
-
-      .card-chevron
-      {
-        font-size: 9px;
-        color: var(--dim);
-        flex-shrink: 0;
-        margin-top: 4px;
-        transition: transform 0.2s ease;
-        font-style: normal;
-      }
-
-      .card.open .card-chevron { transform: rotate(180deg); }
-
-      .card-body
-      {
-        display: none;
-        flex-direction: column;
-        padding: 0 12px 10px 12px;
-        gap: 4px;
-        border-top: 1px solid var(--border);
-        padding-top: 8px;
-      }
-
-      .card.open .card-body { display: flex; }
-
-      /* Meta pills */
-      .meta-row
-      {
-        display: flex;
-        gap: 6px;
-        margin-bottom: 4px;
-      }
-
-      .meta-pill
-      {
-        font-family: var(--mono);
-        font-size: 9.5px;
-        color: var(--muted);
-        background: var(--card);
-        border: 1px solid var(--border);
-        padding: 2px 8px;
-        border-radius: 2px;
-      }
-
-      .meta-pill.timer
-      {
-        color: var(--orange);
-        border-color: rgba(255, 122, 53, 0.3);
-      }
-
-      .meta-pill.score
-      {
-        color: var(--mint);
-        border-color: rgba(61, 255, 160, 0.3);
-      }
-
-      /* Choice rows */
-      .choice
-      {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 7px 10px;
-        border-radius: 3px;
-        background: var(--card);
-        border: 1px solid var(--border);
-      }
-
-      .choice-num
-      {
-        font-family: var(--mono);
-        font-size: 9px;
-        color: var(--dim);
-        flex-shrink: 0;
-        width: 14px;
-        text-align: right;
-      }
-
-      .choice-text
-      {
-        font-size: 12px;
-        color: rgba(240, 238, 232, 0.85);
-        line-height: 1.4;
-        flex: 1;
-      }
-
-      /* Info body */
-      .info-text
-      {
-        font-size: 11.5px;
-        color: var(--muted);
-        line-height: 1.65;
-        padding: 4px 0;
-      }
-
-      /* -- FOOTER -- */
-      .footer
-      {
-        display: none;
-        padding: 7px 16px;
-        background: var(--black);
-        border-top: 1px solid var(--border);
-        align-items: center;
-        justify-content: space-between;
-        flex-shrink: 0;
-      }
-
-      .footer-text
-      {
-        font-family: var(--mono);
-        font-size: 9.5px;
-        color: var(--dim);
-      }
-
-      .btn-rescan
-      {
-        font-family: var(--font);
-        font-size: 10px;
-        font-weight: 500;
-        color: var(--muted);
-        background: transparent;
-        border: 1px solid var(--border2);
-        padding: 4px 12px;
-        border-radius: 2px;
-        cursor: pointer;
-        transition: all 0.15s;
-        letter-spacing: 0.2px;
-      }
-
-      .btn-rescan:hover
-      {
-        color: var(--white);
-        border-color: var(--cyan);
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- HEADER -->
-    <div class="header">
-      <div class="logo-mark">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M 3.5 19 L 3.5 6.5 L 7.5 6.5 L 9.8 10 L 9.8 13.5 L 7 13.5 L 7 19 Z" fill="#00F0FF" fill-opacity="0.9"/>
-          <path d="M 20.5 19 L 20.5 6.5 L 16.5 6.5 L 14.2 10 L 14.2 13.5 L 17 13.5 L 17 19 Z" fill="#00F0FF" fill-opacity="0.9"/>
-          <circle cx="12" cy="3.5" r="1.5" fill="#FF3366"/>
-          <path d="M 4.5 12 L 9.5 18 L 19.5 4.5" stroke="#00FFB3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M 4.5 12 L 9.5 18 L 19.5 4.5" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    }
+
+    /* -- CARDS -- */
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+
+    .card:hover {
+      border-color: var(--border2);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* left accent stripe */
+    .card-stripe {
+      width: 2px;
+      flex-shrink: 0;
+      border-radius: 2px;
+      align-self: stretch;
+      min-height: 16px;
+      background: var(--dim);
+      margin-top: 2px;
+    }
+
+    .stripe-quiz {
+      background: var(--orange);
+    }
+
+    .stripe-mc {
+      background: var(--mint);
+    }
+
+    .stripe-info {
+      background: var(--cyan);
+    }
+
+    .card-middle {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-tag {
+      font-family: var(--mono);
+      font-size: 8.5px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      color: var(--dim);
+    }
+
+    .tag-quiz {
+      color: var(--orange);
+    }
+
+    .tag-mc {
+      color: var(--mint);
+    }
+
+    .tag-info {
+      color: var(--cyan);
+    }
+
+    .card-q {
+      font-size: 12.5px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--white);
+    }
+
+    .card-chevron {
+      font-size: 9px;
+      color: var(--dim);
+      flex-shrink: 0;
+      margin-top: 4px;
+      transition: transform 0.2s ease;
+      font-style: normal;
+    }
+
+    .card.open .card-chevron {
+      transform: rotate(180deg);
+    }
+
+    .card-body {
+      display: none;
+      flex-direction: column;
+      padding: 0 12px 10px 12px;
+      gap: 4px;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+    }
+
+    .card.open .card-body {
+      display: flex;
+    }
+
+    /* Meta pills */
+    .meta-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .meta-pill {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      color: var(--muted);
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .meta-pill.timer {
+      color: var(--orange);
+      border-color: rgba(255, 122, 53, 0.3);
+    }
+
+    .meta-pill.score {
+      color: var(--mint);
+      border-color: rgba(61, 255, 160, 0.3);
+    }
+
+    /* Choice rows */
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 3px;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+
+    .choice-num {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--dim);
+      flex-shrink: 0;
+      width: 14px;
+      text-align: right;
+    }
+
+    .choice-text {
+      font-size: 12px;
+      color: rgba(240, 238, 232, 0.85);
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    /* Info body */
+    .info-text {
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.65;
+      padding: 4px 0;
+    }
+
+    /* -- FOOTER -- */
+    .footer {
+      display: none;
+      padding: 7px 16px;
+      background: var(--black);
+      border-top: 1px solid var(--border);
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .footer-text {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      color: var(--dim);
+    }
+
+    .btn-rescan {
+      font-family: var(--font);
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--border2);
+      padding: 4px 12px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.2px;
+    }
+
+    .btn-rescan:hover {
+      color: var(--white);
+      border-color: var(--cyan);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-mark">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 3.5 19 L 3.5 6.5 L 7.5 6.5 L 9.8 10 L 9.8 13.5 L 7 13.5 L 7 19 Z" fill="#00F0FF"
+          fill-opacity="0.9" />
+        <path d="M 20.5 19 L 20.5 6.5 L 16.5 6.5 L 14.2 10 L 14.2 13.5 L 17 13.5 L 17 19 Z" fill="#00F0FF"
+          fill-opacity="0.9" />
+        <circle cx="12" cy="3.5" r="1.5" fill="#FF3366" />
+        <path d="M 4.5 12 L 9.5 18 L 19.5 4.5" stroke="#00FFB3" stroke-width="3" stroke-linecap="round"
+          stroke-linejoin="round" />
+        <path d="M 4.5 12 L 9.5 18 L 19.5 4.5" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </div>
+    <div class="title-block">
+      <h1>MentiChecker</h1>
+      <span>slide inspector &bull; <b style="color:var(--cyan);font-weight:500;">Author: D4SHW00D</b></span>
+    </div>
+    <div class="header-stat" id="stat"></div>
+  </div>
+
+  <!-- AUTO-ANSWER BAR -->
+  <div class="auto-bar" id="auto-bar">
+    <div class="auto-bar-info">
+      <span class="auto-bar-title">&#9889; Auto-answer on slide</span>
+      <span class="auto-bar-sub">0.5s-1.5s timer after options appear</span>
+    </div>
+    <button class="auto-btn on" id="btn-auto-toggle" title="Toggle automatic selection on presentation slide">AUTO
+      ON</button>
+  </div>
+
+  <!-- QUIZ PLAYER NAME BAR -->
+  <div class="player-bar" id="player-bar">
+    <div class="player-bar-info">
+      <span class="player-bar-title">&#128100; Quiz Player Name</span>
+      <input type="text" id="popup-player-name" class="player-input" placeholder="e.g. Arslan Diveyev" maxlength="30" />
+    </div>
+    <button class="player-btn" id="btn-save-name" title="Save name for automatic quiz lobby join">SET</button>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters" id="filters">
+    <span class="filter-label">Show</span>
+    <button class="f-btn active" data-filter="all">All</button>
+    <button class="f-btn" data-filter="quiz">Quiz</button>
+    <button class="f-btn" data-filter="mc">Poll</button>
+    <button class="f-btn" data-filter="info">Info</button>
+  </div>
+
+  <!-- MAIN SCROLL AREA -->
+  <div class="scroll" id="main">
+    <div class="state" id="init-state">
+      <div class="state-symbol">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 3.5 19 L 3.5 6.5 L 7.5 6.5 L 9.8 10 L 9.8 13.5 L 7 13.5 L 7 19 Z" fill="#00F0FF"
+            fill-opacity="0.9" />
+          <path d="M 20.5 19 L 20.5 6.5 L 16.5 6.5 L 14.2 10 L 14.2 13.5 L 17 13.5 L 17 19 Z" fill="#00F0FF"
+            fill-opacity="0.9" />
+          <circle cx="12" cy="3.5" r="1.5" fill="#FF3366" />
+          <path d="M 4.5 12 L 9.5 18 L 19.5 4.5" stroke="#00FFB3" stroke-width="3" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M 4.5 12 L 9.5 18 L 19.5 4.5" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round"
+            stroke-linejoin="round" />
         </svg>
       </div>
-      <div class="title-block">
-        <h1>MentiChecker</h1>
-        <span>slide inspector &bull; <b style="color:var(--cyan);font-weight:500;">Author: D4SHW00D</b></span>
-      </div>
-      <div class="header-stat" id="stat"></div>
+      <h2>MentiChecker</h2>
+      <p>Open any menti.com presentation,<br>then click Scan.</p>
+      <button class="btn-scan" id="btn-scan">Scan Page</button>
     </div>
+  </div>
 
-    <!-- AUTO-ANSWER BAR -->
-    <div class="auto-bar" id="auto-bar">
-      <div class="auto-bar-info">
-        <span class="auto-bar-title">&#9889; Auto-answer on slide</span>
-        <span class="auto-bar-sub">0.5s–1.5s timer after options appear</span>
-      </div>
-      <button class="auto-btn on" id="btn-auto-toggle" title="Toggle automatic selection on presentation slide">AUTO
-        ON</button>
-    </div>
+  <!-- FOOTER -->
+  <div class="footer" id="footer">
+    <span class="footer-text" id="footer-txt">ready</span>
+    <span class="footer-author">Author: D4SHW00D</span>
+    <button class="btn-rescan" id="btn-rescan">&#8635; Rescan</button>
+  </div>
 
-    <!-- FILTERS -->
-    <div class="filters" id="filters">
-      <span class="filter-label">Show</span>
-      <button class="f-btn active" data-filter="all">All</button>
-      <button class="f-btn" data-filter="quiz">Quiz</button>
-      <button class="f-btn" data-filter="mc">Poll</button>
-      <button class="f-btn" data-filter="info">Info</button>
-    </div>
+  <script src="popup.js"></script>
+</body>
 
-    <!-- MAIN SCROLL AREA -->
-    <div class="scroll" id="main">
-      <div class="state" id="init-state">
-        <div class="state-symbol">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 3.5 19 L 3.5 6.5 L 7.5 6.5 L 9.8 10 L 9.8 13.5 L 7 13.5 L 7 19 Z" fill="#00F0FF" fill-opacity="0.9"/>
-            <path d="M 20.5 19 L 20.5 6.5 L 16.5 6.5 L 14.2 10 L 14.2 13.5 L 17 13.5 L 17 19 Z" fill="#00F0FF" fill-opacity="0.9"/>
-            <circle cx="12" cy="3.5" r="1.5" fill="#FF3366"/>
-            <path d="M 4.5 12 L 9.5 18 L 19.5 4.5" stroke="#00FFB3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M 4.5 12 L 9.5 18 L 19.5 4.5" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h2>MentiChecker</h2>
-        <p>Open any menti.com presentation,<br>then click Scan.</p>
-        <button class="btn-scan" id="btn-scan">Scan Page</button>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer" id="footer">
-      <span class="footer-text" id="footer-txt">ready</span>
-      <span class="footer-author">Author: D4SHW00D</span>
-      <button class="btn-rescan" id="btn-rescan">&#8635; Rescan</button>
-    </div>
-
-    <script src="popup.js"></script>
-  </body>
 </html>
